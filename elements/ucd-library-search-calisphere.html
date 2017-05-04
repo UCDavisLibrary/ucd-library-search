@@ -1,0 +1,43 @@
+
+<dom-module id="ucd-library-search-calisphere">
+  <template>
+    <style include="shared-styles"></style>
+    <style>
+      :host {
+        color: white;
+        text-shadow: 1px 1px 1px black;
+        display: block;
+
+        -webkit-animation:bounceIn 400ms ease-out;
+        -ms-animation:bounceIn 400ms ease-out;
+        animation:bounceIn 400ms ease-out;
+      }
+    </style>
+
+    <h1>Calisphere</h1>
+    <div class="layout">
+      <div class="flex">
+        <input placeholder="Search Calisphere" on-keyup="_onKeyUp" />
+      </div>
+      <div>
+        <a class="search-btn" id="btn">Search</a>
+      </div>
+    </div>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'ucd-library-search-calisphere',
+
+      rootUrl : 'https://calisphere.org/search/',
+
+      _onKeyUp : function(e) {
+        if( e.which === 13 ) {
+          window.location = this.$.btn.href;
+          return;
+        }
+        this.$.btn.href = this.rootUrl+'?q='+encodeURIComponent(e.currentTarget.value);
+      }
+    });
+  </script>
+</dom-module>

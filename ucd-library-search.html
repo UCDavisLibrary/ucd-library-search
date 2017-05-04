@@ -1,0 +1,66 @@
+<link rel="import" href="bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="bower_components/iron-media-query/iron-media-query.html">
+
+<link rel="import" href="elements/styles.html">
+<link rel="import" href="elements/ucd-library-db-tax.html">
+<link rel="import" href="elements/ucd-library-search-nav.html">
+<link rel="import" href="elements/ucd-library-search-catalog.html">
+<link rel="import" href="elements/ucd-library-search-databases.html">
+<link rel="import" href="elements/ucd-library-search-calisphere.html">
+<link rel="import" href="elements/ucd-library-search-melvyl.html">
+<link rel="import" href="elements/ucd-library-search-website.html">
+
+<dom-module id="ucd-library-search">
+  <template>
+    <style>
+      :host {
+        text-align: left;
+        max-width: 1100px;
+        background: rgba(0, 0, 0, .2);
+        box-shadow: 0 1px 3px #333;
+        display: block;
+        padding: 15px;
+      }
+
+      @media(min-width: 900px) {
+        :host {
+          padding: 20px;
+        }
+      }
+
+      [layout] {
+        @apply(--layout-horizontal);
+      }
+      [flex] {
+        @apply(--layout-flex);
+      }
+      [padded] {
+        padding-left: 50px
+      }
+    </style>
+
+    <iron-media-query query="min-width: 800px" query-matches="{{largeScreen}}"></iron-media-query>
+
+
+    <div layout$="[[largeScreen]]">
+      <ucd-library-search-nav selected="{{section}}"></ucd-library-search-nav>
+
+      <div flex$="[[largeScreen]]" padded$="[[largeScreen]]">
+        <iron-pages selected="{{section}}" attr-for-selected="section">
+          <ucd-library-search-catalog section="library" ></ucd-library-search-catalog>
+          <ucd-library-search-databases section="databases" ></ucd-library-search-databases>
+          <ucd-library-search-calisphere section="calisphere" ></ucd-library-search-calisphere>
+          <ucd-library-search-melvyl section="melvyl" ></ucd-library-search-melvyl>
+          <ucd-library-search-website section="website" ></ucd-library-search-website>
+        </iron-pages>
+      </div>
+    </div>
+    
+  </template>
+  <script>
+    Polymer({
+      is: 'ucd-library-search'
+    });
+  </script>
+</dom-module>

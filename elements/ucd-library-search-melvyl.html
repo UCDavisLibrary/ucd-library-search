@@ -1,0 +1,56 @@
+
+<dom-module id="ucd-library-search-melvyl">
+  <template>
+    <style include="shared-styles"></style>
+    <style>
+      :host {
+        color: white;
+        text-shadow: 1px 1px 1px black;
+        display: block;
+
+        -webkit-animation:bounceIn 400ms ease-out;
+        -ms-animation:bounceIn 400ms ease-out;
+        animation:bounceIn 400ms ease-out;
+      }
+
+    </style>
+
+    <h1>Melvyl</h1>
+    <div class="layout">
+      <div class="flex">
+        <input placeholder="Search Melvyl" on-keyup="_onKeyUp"  />
+      </div>
+      <div>
+        <a class="search-btn" id="btn">Search</a>
+      </div>
+    </div>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'ucd-library-search-melvyl',
+
+      rootUrl : 'https://www.library.ucdavis.edu',
+      parameters : {
+        's' : '',
+        'search-option' : '2'
+      },
+
+      _onKeyUp : function(e) {
+        if( e.which === 13 ) {
+          window.location = this.$.btn.href;
+          return;
+        }
+
+        this.parameters.s = e.currentTarget.value;
+
+        var params = [];
+        for( var key in this.parameters ) {
+          params.push(key+'='+encodeURIComponent(this.parameters[key]));
+        }
+
+        this.$.btn.href = this.rootUrl+'?'+params.join('&');
+      }
+    });
+  </script>
+</dom-module>
