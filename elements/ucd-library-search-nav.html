@@ -1,10 +1,12 @@
 
 <dom-module id="ucd-library-search-nav">
   <template>
+    <style include="shared-styles"></style>
     <style>
       :host {
-        display: inline-block;
+        display: block;
       }
+
       .layout {
         @apply(--layout-horizontal);
       }
@@ -67,13 +69,22 @@
           width: 125px;
         }
       }
-
-
     </style>
 
     <iron-media-query query="min-width: 800px" query-matches="{{largeScreen}}"></iron-media-query>
+    <iron-media-query query="max-width: 600px" query-matches="{{smallScreen}}"></iron-media-query>
 
-    <div layout$="[[!largeScreen]]">
+    <div hidden$="[[!smallScreen]]">
+      <select id="selector" on-change="_select" style="display:block; margin-bottom: 40px">
+        <option value="library">Library Catalogs</option>
+        <option value="databases">Databases</option>
+        <option value="calisphere">Calisphere</option>
+        <option value="melvyl">Melvyl</option>
+        <option value="website">Site Search</option>
+      </select>
+    </div>
+
+    <div layout$="[[!largeScreen]]" hidden$="[[smallScreen]]">
       <div class="layout">
         <button on-click="_select" class="selected" value="library"><div>Library Catalogs</div></button>
         <button on-click="_select" value="databases"><div>Databases</div></button>
@@ -104,9 +115,10 @@
         for( var i = 0; i < eles.length; i++ ) {
           eles[i].classList.remove('selected');
         }
-        e.currentTarget.classList.add('selected');
 
-        this.selected = e.currentTarget.getAttribute('value');
+        this.selected = e.currentTarget.value || e.currentTarget.getAttribute('value');
+        this.querySelector('button[value="'+this.selected+'"]').classList.add('selected');
+        this.$.selector.value = this.selected;
       }
     });
   </script>

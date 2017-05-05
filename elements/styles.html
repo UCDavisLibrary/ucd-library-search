@@ -9,6 +9,7 @@
       }
 
       .search-btn {
+        text-align: center;
         display: inline-block;
         background: #002655;;
         color: #fff;
@@ -30,13 +31,8 @@
         font-weight: 100;
       }
 
-      select {
-        -webkit-appearance: none;
-        -webkit-border-radius: 0px;
-        height: 52px;
-      }
-
       select, input {
+        display: block;
         width: 100%;
         background-color: white;
         padding: 15px;
@@ -46,8 +42,31 @@
         font-weight: 600;
         font-size: 1rem;
         line-height: 1.25;
-        background-image: none;
         background-clip: padding-box;
+      }
+
+      select {
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAMAAACelLz8AAAAJ1BMVEVmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmaP/QSjAAAADHRSTlMAAgMJC0uWpKa6wMxMdjkoAAAANUlEQVR4AeXJyQEAERAAsNl7Hf3X6xt0QL6JpZWq30pdvdadme+0PMdzvHm8YThHcT1H7K0BtOMDniZhWOgAAAAASUVORK5CYII=');
+        -webkit-background-size: 13px 13px;
+        background-size: 13px;
+        background-repeat: no-repeat;
+        background-position: right center;
+        padding-right: 20px;
+
+        -webkit-appearance: none;
+        -webkit-border-radius: 0px;
+        height: 52px;
+      }
+
+      @media(max-width: 700px) {
+        select, input, .search-btn {
+          padding: 10px;
+          font-size: .75rem;
+        }
+        select {
+          height: 37px;
+          padding-right: 15px;
+        }
       }
 
       input:focus, select:focus {

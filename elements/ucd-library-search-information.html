@@ -1,0 +1,63 @@
+<dom-module id="ucd-library-search-information">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        color: #ccc;
+        height: 20px;
+        width: 20px;
+        position: relative;
+      }
+      iron-icon {
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        cursor: pointer;
+        top: -10px;
+        right: 5px;
+      }
+      #popup {
+        min-width: 200px;
+        max-width: 400px;
+        display: none;
+        font-size: 14px;
+        position: absolute;
+        top : 20px;
+        right : 5px;
+        z-index: 50px;
+        background: rgba(78, 78, 78, .8);
+        color: white;
+        padding: 15px;
+      }
+    </style>
+
+    <iron-icon icon="info-outline" on-click="show"></iron-icon>
+    <div id="popup">Testing this is lots of text, love lots of text.
+      here we go.  this is the definition.  ok, ya. text.
+    </div>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'ucd-library-search-information',
+
+
+      ready : function() {
+        window.addEventListener('click', this.hide.bind(this));
+      },
+
+      hide : function() {
+        this.$.popup.style.display = 'none';
+      },
+
+      show : function(e) {
+        if( e && e.preventDefault ) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        this.$.popup.style.display = 'block';
+      }
+
+    });
+  </script>
+</dom-module>
