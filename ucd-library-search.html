@@ -4,6 +4,7 @@
 
 <link rel="import" href="elements/styles.html">
 <link rel="import" href="elements/ucd-library-db-tax.html">
+<link rel="import" href="elements/ucd-library-filter-list.html">
 <link rel="import" href="elements/ucd-library-search-nav.html">
 <link rel="import" href="elements/ucd-library-search-catalog.html">
 <link rel="import" href="elements/ucd-library-search-databases.html">
@@ -61,7 +62,14 @@
   </template>
   <script>
     Polymer({
-      is: 'ucd-library-search'
+      is: 'ucd-library-search',
+
+      properties : {
+        section : {
+          type : String,
+          value : 'databases'
+        }
+      }
     });
   </script>
 </dom-module>

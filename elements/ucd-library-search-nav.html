@@ -86,7 +86,7 @@
 
     <div layout$="[[!largeScreen]]" hidden$="[[smallScreen]]">
       <div class="layout">
-        <button on-click="_select" class="selected" value="library"><div>Library Catalogs</div></button>
+        <button on-click="_select" value="library"><div>Library Catalogs</div></button>
         <button on-click="_select" value="databases"><div>Databases</div></button>
         <button on-click="_select" value="calisphere"><div>Calisphere</div></button>
       </div>
@@ -110,15 +110,26 @@
         }
       },
 
+      attached : function() {
+        this._resetBtns();
+
+        this.querySelector('button[value="'+this.selected+'"]').classList.add('selected');
+        this.$.selector.value = this.selected;
+      },
+
       _select : function(e) {
-        var eles = this.querySelectorAll('button');
-        for( var i = 0; i < eles.length; i++ ) {
-          eles[i].classList.remove('selected');
-        }
+        this._resetBtns();
 
         this.selected = e.currentTarget.value || e.currentTarget.getAttribute('value');
         this.querySelector('button[value="'+this.selected+'"]').classList.add('selected');
         this.$.selector.value = this.selected;
+      },
+
+      _resetBtns : function() {
+        var eles = this.querySelectorAll('button');
+        for( var i = 0; i < eles.length; i++ ) {
+          eles[i].classList.remove('selected');
+        }
       }
     });
   </script>
