@@ -1,0 +1,134 @@
+
+<dom-module id="ucd-library-filter-list">
+  <template>
+    <style include="shared-styles"></style>
+    <style>
+      :host {
+        display: block;
+        position: relative;
+      }
+      #popup {
+        display: none;
+        overflow: auto;
+        position: absolute;
+        top : 52px;
+        left : 0;
+        right : 0;
+        background: white;
+        box-shadow: 0 1px 1px #333;
+        max-height: 300px;
+        color: #333;
+        text-shadow: none;
+        border-right: 1px solid #002655;
+        border-left: 1px solid #002655;
+        border-bottom: 1px solid #002655;
+      }
+
+      @media(max-width: 700px) {
+        #popup {
+          top: 37px;
+        }
+      }
+
+      #popup div, #popup a {
+        padding: 10px;
+      }
+      #popup div.header {
+        color: #888;
+      }
+      #popup a {
+        display: block;
+        color: #333;
+        text-decoration: none;
+      }
+      #popup a:hover {
+        background: #f8f8f8;
+      }
+    </style>
+    
+    <input id="input" type="text" on-click="_onPopupClick" on-focus="_onFocus" on-keyup="_onKeyUp" />
+    <div id="popup" on-click="_onPopupClick">
+      <template is="dom-repeat" items="[[renderList]]">
+        <template is="dom-if" if="[[item.isHeader]]">
+          <div class="header">[[item.section]]</div>
+        </template>
+        <template is="dom-if" if="[[!item.isHeader]]">
+          <a href$="[[item.url]]">[[item.label]]</a>
+        </template>
+      </template>
+    </div>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'ucd-library-filter-list',
+
+      properties : {
+        data : {
+          type : Array,
+          value : function() {
+            return [];
+          },
+          observer : '_filter'
+        },
+        renderList : {
+          type : Array,
+          value : function() {
+            return [];
+          }
+        }
+      },
+
+      ready : function() {
+        window.addEventListener('click', this.hide.bind(this));
+      },
+
+      show : function() {
+        this.$.popup.style.display = 'block';
+      },
+
+      hide : function() {
+        this.$.popup.style.display = 'none';
+      },
+
+      _onPopupClick : function(e) {
+        e.stopPropagation();
+      },
+
+      _onFocus : function() {
+        this.show();
+      },
+
+      _onKeyUp : function() {
+        this.debounce('filter', this._filter, 50);
+      },
+
+      _filter : function() {
+        var hash = {};
+
+        var re = new RegExp(this.$.input.value, 'i');
+        var item, i;
+        
+        for( i = 0; i < this.data.length; i++ ) {
+          item = this.data[i];
+          if( item.isHeader ) continue;
+          if( item.label.match(re) ) {
+            if( !hash[item.section] ) hash[item.section] = [];
+            hash[item.section].push(item);
+          }
+        }
+
+        var newlist = [], sublist;
+        for( var key in hash ) {
+          sublist = hash[key];
+          newlist.push({section: key, isHeader: true});
+          for( i = 0; i < sublist.length; i++ ) {
+            newlist.push(sublist[i]);
+          }
+        }
+
+        this.renderList = newlist;
+      }
+    });
+  </script>
+</dom-module>
