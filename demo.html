@@ -9839,10 +9839,11 @@ Example:
 
       h1, h2 {
         margin-top: 0;
+        margin-bottom: 5px;
         font-weight: 100;
       }
 
-      select, input {
+      select, input[type="text"] {
         box-sizing: border-box;
         display: block;
         width: 100%;
@@ -9873,11 +9874,11 @@ Example:
       .help {
         font-size: 12px;
         color: #f8f8f8;
-        padding-top: 5px;
+        padding-bottom: 15px;
       }
 
       @media(max-width: 700px) {
-        select, input, .search-btn {
+        select, input[type="text"], .search-btn {
           padding: 10px;
           font-size: .75rem;
         }
@@ -9887,7 +9888,7 @@ Example:
         }
       }
 
-      input:focus, select:focus {
+      input[type="text"]:focus, select:focus {
         outline:0;
         border: 1px solid #002655;
         color: #002655;
@@ -10208,19 +10209,45 @@ var UCD_LIB_DB_TAXONOMY = [{"anchor_label":"Science","tags_repeater":[{"section_
         -ms-animation:bounceIn 400ms ease-out;
         animation:bounceIn 400ms ease-out;
       }
+
+      a[extra] {
+        font-weight: normal;
+        color: white;
+        text-shadow: none;
+      }
+      a[extra]:hover {
+        color: #0048a2;
+        text-decoration: underline;
+      }
     </style>
 
-    <h1>Library Catalog</h1>
+    <h1>UC Davis Library Catalog</h1>
+    <div class="help">
+      Find books, ebooks, journals, movies and music, government documents, and more.
+    </div>
     <div class="layout">
       <div class="flex">
-        <input placeholder="Search Library Catalog" on-keyup="_onKeyUp">
+        <input type="text" placeholder="Search Library Catalog" on-keyup="_onKeyUp">
       </div>
       <div>
         <a class="search-btn" id="btn">Search</a>
       </div>
     </div>
-    <div class="help">
-      Find books, ebooks, journals, movies and music, government documents, and more.
+    
+    <div style="text-align: right; padding: 5px 0">
+      <a extra="" id="advanced">Advanced Search</a> | <a extra="" href="http://search.library.ucdavis.edu/primo_library/libweb/action/search.do?fn=showBrowse&amp;mode=BrowseSearch&amp;vid=01UCD_V1">Browse Search</a>
+    </div>
+    
+    
+
+    <div class="layout center">
+
+      <label for="extra" class="help flex" style="text-align: right">
+        Include online full-text journal articles available through the library
+      </label>
+      <div>
+        <input type="checkbox" id="extra" on-change="setBtnHrefs">
+      </div>
     </div>
 
   </template>
@@ -10228,10 +10255,64 @@ var UCD_LIB_DB_TAXONOMY = [{"anchor_label":"Science","tags_repeater":[{"section_
     Polymer({
       is: 'ucd-library-search-catalog',
 
-      rootUrl : 'https://www.library.ucdavis.edu',
+      rootUrl : 'http://search.library.ucdavis.edu/primo_library/libweb/action/search.do',
+      // rootUrl : 'https://www.library.ucdavis.edu',
+      // parameters : {
+      //   's' : '',
+      //   'search-option' : '1'
+      // },
       parameters : {
-        's' : '',
-        'search-option' : '1'
+        normal : {
+          mode : 'Basic',
+          vid : '01UCD_V1',
+          'vl(freeText0)' : '',
+          fn : 'search',
+          tab : 'default_tab'
+        },
+        catalog : {
+          mode : 'Basic',
+          vid : '01UCD_V1',
+          'vl(freeText0)' : '',
+          fn : 'search',
+          tab : 'catalog_tab'
+        },
+        'advanced-catalog' : {
+          mode : 'Advanced',
+          ct : 'AdvancedSearch',
+          vid : '01UCD_V1', 
+          tab : 'catalog_tab',
+          fn : 'search',
+          indx : 1,
+          dscnt : 0,
+          'vl(freeText0)' : ''
+        },
+        'advanced-normal' : {
+          mode : 'Advanced',
+          ct : 'AdvancedSearch',
+          frbg : '&',
+          indx : 1,
+          fn : 'search',
+          'vl(1UI0)' : 'contains',
+          dscnt : 0,
+          'scp.scps' : 'scope:("01UCD"),primo_central_multiple_fe',
+          tb : 't',
+          vid : '01UCD_V1',
+          ct : 'search', 
+          srt : 'rank',
+          tab : 'default_tab',
+          'vl(163137160UI0)' : 'any',
+          dum : true,
+          'vl(freeText0)' : ''
+        },
+        browse : {
+          fn : 'showBrowse',
+          mode : 'BrowseSearch',
+          vid : '01UCD_V1'
+        }
+      },
+
+      ready : function() {
+        this.setBtnHrefs();
       },
 
       _onKeyUp : function(e) {
@@ -10240,14 +10321,36 @@ var UCD_LIB_DB_TAXONOMY = [{"anchor_label":"Science","tags_repeater":[{"section_
           return;
         }
 
-        this.parameters.s = e.currentTarget.value;
+        var textkey = 'vl(freeText0)';
+        this.parameters.normal[textkey] = e.currentTarget.value;
+        this.parameters.catalog[textkey] = e.currentTarget.value;
+        this.parameters['advanced-catalog'][textkey] = e.currentTarget.value;
+        this.parameters['advanced-normal'][textkey] = e.currentTarget.value;
+        this.setBtnHrefs();
+      },
 
-        var params = [];
-        for( var key in this.parameters ) {
-          params.push(key+'='+encodeURIComponent(this.parameters[key]));
+      setBtnHrefs : function() {
+        var normalHref = [];
+        var advancedHref = [];
+
+        if( !this.$.extra.checked ) {
+          for( var key in this.parameters.catalog ) {
+            normalHref.push(encodeURIComponent(key)+'='+encodeURIComponent(this.parameters.catalog[key]));
+          }
+          for( var key in this.parameters['advanced-catalog'] ) {
+            advancedHref.push(encodeURIComponent(key)+'='+encodeURIComponent(this.parameters['advanced-catalog'][key]));
+          }
+        } else {
+          for( var key in this.parameters.normal ) {
+            normalHref.push(encodeURIComponent(key)+'='+encodeURIComponent(this.parameters.normal[key]));
+          }
+          for( var key in this.parameters['advanced-normal'] ) {
+            advancedHref.push(encodeURIComponent(key)+'='+encodeURIComponent(this.parameters['advanced-normal'][key]));
+          }
         }
 
-        this.$.btn.href = this.rootUrl+'?'+params.join('&');
+        this.$.btn.href = this.rootUrl+'?'+normalHref.join('&');
+        this.$.advanced.href = this.rootUrl+'?'+advancedHref.join('&');
       }
 
     });
@@ -10285,6 +10388,7 @@ var UCD_LIB_DB_TAXONOMY = [{"anchor_label":"Science","tags_repeater":[{"section_
     </style>
 
     <h1>Databases</h1>
+    <div class="help">Find collections of scholarly journal articles, digitized primary sources, streaming media, and more.</div>
 
     <!--<div style="margin-bottom: 4px">By Catagory</div>
     <div class="layout">
@@ -10304,7 +10408,7 @@ var UCD_LIB_DB_TAXONOMY = [{"anchor_label":"Science","tags_repeater":[{"section_
     <div style="padding: 4px 0">A-Z</div>
     <div id="az"></div>
 
-    <div class="help">Find scholarly journal articles, digitized primary sources, streaming media, and more.</div>
+    
 
   </template>
   <script>
@@ -10374,15 +10478,16 @@ var UCD_LIB_DB_TAXONOMY = [{"anchor_label":"Science","tags_repeater":[{"section_
     </style>
 
     <h1>Calisphere</h1>
+    <div class="help">Discover over 750,000 photographs, documents, letters, artwork, diaries, oral histories, films, advertisements, musical recordings, and more.</div>
+
     <div class="layout">
       <div class="flex">
-        <input placeholder="Search Calisphere" on-keyup="_onKeyUp">
+        <input type="text" placeholder="Search Calisphere" on-keyup="_onKeyUp">
       </div>
       <div>
         <a class="search-btn" id="btn">Search</a>
       </div>
     </div>
-    <div class="help">Discover over 750,000 photographs, documents, letters, artwork, diaries, oral histories, films, advertisements, musical recordings, and more.</div>
 
   </template>
   <script>
@@ -10417,15 +10522,16 @@ var UCD_LIB_DB_TAXONOMY = [{"anchor_label":"Science","tags_repeater":[{"section_
     </style>
 
     <h1>Melvyl</h1>
+    <div class="help">Find books, journals, media, and other materials held in UC libraries and other libraries worldwide.</div>
+    
     <div class="layout">
       <div class="flex">
-        <input placeholder="Search Melvyl" on-keyup="_onKeyUp">
+        <input type="text" placeholder="Search Melvyl" on-keyup="_onKeyUp">
       </div>
       <div>
         <a class="search-btn" id="btn">Search</a>
       </div>
     </div>
-    <div class="help">Find books, journals, media, and other materials held in UC libraries and other libraries worldwide.</div>
 
   </template>
   <script>
@@ -10471,15 +10577,16 @@ var UCD_LIB_DB_TAXONOMY = [{"anchor_label":"Science","tags_repeater":[{"section_
     </style>
 
     <h1>Site Search</h1>
+    <div class="help">Find research guides, manuscripts and archives, services and people.</div>
+
     <div class="layout">
       <div class="flex">
-        <input placeholder="Search Website" on-keyup="_onKeyUp">
+        <input type="text" placeholder="Search Website" on-keyup="_onKeyUp">
       </div>
       <div>
         <a class="search-btn" id="btn">Search</a>
       </div>
     </div>
-    <div class="help">Find research guides, manuscripts and archives, services and people.</div>
 
   </template>
   <script>
@@ -10564,7 +10671,7 @@ var UCD_LIB_DB_TAXONOMY = [{"anchor_label":"Science","tags_repeater":[{"section_
       properties : {
         section : {
           type : String,
-          value : 'databases'
+          value : 'library'
         }
       }
     });
