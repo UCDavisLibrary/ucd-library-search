@@ -12,19 +12,45 @@
         -ms-animation:bounceIn 400ms ease-out;
         animation:bounceIn 400ms ease-out;
       }
+
+      a[extra] {
+        font-weight: normal;
+        color: white;
+        text-shadow: none;
+      }
+      a[extra]:hover {
+        color: #0048a2;
+        text-decoration: underline;
+      }
     </style>
 
-    <h1>Library Catalog</h1>
+    <h1>UC Davis Library Catalog</h1>
+    <div class="help">
+      Find books, ebooks, journals, movies and music, government documents, and more.
+    </div>
     <div class="layout">
       <div class="flex">
-        <input placeholder="Search Library Catalog" on-keyup="_onKeyUp" />
+        <input type="text" placeholder="Search Library Catalog" on-keyup="_onKeyUp" />
       </div>
       <div>
         <a class="search-btn" id="btn">Search</a>
       </div>
     </div>
-    <div class="help">
-      Find books, ebooks, journals, movies and music, government documents, and more.
+    
+    <div style="text-align: right; padding: 5px 0">
+      <a extra id="advanced">Advanced Search</a> | <a extra href="http://search.library.ucdavis.edu/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=01UCD_V1">Browse Search</a>
+    </div>
+    
+    
+
+    <div class="layout center">
+
+      <label for="extra" class="help flex" style="text-align: right">
+        Include online full-text journal articles available through the library
+      </label>
+      <div>
+        <input type="checkbox" id="extra" on-change="setBtnHrefs"/>
+      </div>
     </div>
 
   </template>
@@ -32,10 +58,64 @@
     Polymer({
       is: 'ucd-library-search-catalog',
 
-      rootUrl : 'https://www.library.ucdavis.edu',
+      rootUrl : 'http://search.library.ucdavis.edu/primo_library/libweb/action/search.do',
+      // rootUrl : 'https://www.library.ucdavis.edu',
+      // parameters : {
+      //   's' : '',
+      //   'search-option' : '1'
+      // },
       parameters : {
-        's' : '',
-        'search-option' : '1'
+        normal : {
+          mode : 'Basic',
+          vid : '01UCD_V1',
+          'vl(freeText0)' : '',
+          fn : 'search',
+          tab : 'default_tab'
+        },
+        catalog : {
+          mode : 'Basic',
+          vid : '01UCD_V1',
+          'vl(freeText0)' : '',
+          fn : 'search',
+          tab : 'catalog_tab'
+        },
+        'advanced-catalog' : {
+          mode : 'Advanced',
+          ct : 'AdvancedSearch',
+          vid : '01UCD_V1', 
+          tab : 'catalog_tab',
+          fn : 'search',
+          indx : 1,
+          dscnt : 0,
+          'vl(freeText0)' : ''
+        },
+        'advanced-normal' : {
+          mode : 'Advanced',
+          ct : 'AdvancedSearch',
+          frbg : '&',
+          indx : 1,
+          fn : 'search',
+          'vl(1UI0)' : 'contains',
+          dscnt : 0,
+          'scp.scps' : 'scope:("01UCD"),primo_central_multiple_fe',
+          tb : 't',
+          vid : '01UCD_V1',
+          ct : 'search', 
+          srt : 'rank',
+          tab : 'default_tab',
+          'vl(163137160UI0)' : 'any',
+          dum : true,
+          'vl(freeText0)' : ''
+        },
+        browse : {
+          fn : 'showBrowse',
+          mode : 'BrowseSearch',
+          vid : '01UCD_V1'
+        }
+      },
+
+      ready : function() {
+        this.setBtnHrefs();
       },
 
       _onKeyUp : function(e) {
@@ -44,14 +124,36 @@
           return;
         }
 
-        this.parameters.s = e.currentTarget.value;
+        var textkey = 'vl(freeText0)';
+        this.parameters.normal[textkey] = e.currentTarget.value;
+        this.parameters.catalog[textkey] = e.currentTarget.value;
+        this.parameters['advanced-catalog'][textkey] = e.currentTarget.value;
+        this.parameters['advanced-normal'][textkey] = e.currentTarget.value;
+        this.setBtnHrefs();
+      },
 
-        var params = [];
-        for( var key in this.parameters ) {
-          params.push(key+'='+encodeURIComponent(this.parameters[key]));
+      setBtnHrefs : function() {
+        var normalHref = [];
+        var advancedHref = [];
+
+        if( !this.$.extra.checked ) {
+          for( var key in this.parameters.catalog ) {
+            normalHref.push(encodeURIComponent(key)+'='+encodeURIComponent(this.parameters.catalog[key]));
+          }
+          for( var key in this.parameters['advanced-catalog'] ) {
+            advancedHref.push(encodeURIComponent(key)+'='+encodeURIComponent(this.parameters['advanced-catalog'][key]));
+          }
+        } else {
+          for( var key in this.parameters.normal ) {
+            normalHref.push(encodeURIComponent(key)+'='+encodeURIComponent(this.parameters.normal[key]));
+          }
+          for( var key in this.parameters['advanced-normal'] ) {
+            advancedHref.push(encodeURIComponent(key)+'='+encodeURIComponent(this.parameters['advanced-normal'][key]));
+          }
         }
 
-        this.$.btn.href = this.rootUrl+'?'+params.join('&');
+        this.$.btn.href = this.rootUrl+'?'+normalHref.join('&');
+        this.$.advanced.href = this.rootUrl+'?'+advancedHref.join('&');
       }
 
     });
