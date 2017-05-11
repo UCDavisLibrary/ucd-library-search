@@ -1,5 +1,5 @@
 
-<dom-module id="ucd-library-search-melvyl">
+<dom-module id="ucd-library-search-guide">
   <template>
     <style include="shared-styles"></style>
     <style>
@@ -12,15 +12,14 @@
         -ms-animation:bounceIn 400ms ease-out;
         animation:bounceIn 400ms ease-out;
       }
-
     </style>
 
-    <h1>All UC Libraries (Melvyl)</h1>
-    <div class="help">Find books, journals, media, and other materials held in UC libraries and other libraries worldwide.</div>
-    
+    <h1>Subject and Course Guides</h1>
+    <div class="help"></div>
+
     <div class="layout">
       <div class="flex">
-        <input type="text" id="input" placeholder="Search Melvyl" on-keyup="_onKeyUp" on-change="_onChange" />
+        <input id="input" type="text" placeholder="Search Subject and Course Guides" on-keyup="_onKeyUp" on-change="_onChange" />
       </div>
       <div>
         <a class="search-btn" id="btn">Search</a>
@@ -30,13 +29,10 @@
   </template>
   <script>
     Polymer({
-      is: 'ucd-library-search-melvyl',
+      is: 'ucd-library-search-guide',
 
       rootUrl : 'https://www.library.ucdavis.edu',
-      parameters : {
-        's' : '',
-        'search-option' : '2'
-      },
+
 
       _onKeyUp : function(e) {
         if( e.which === 13 ) {
@@ -47,14 +43,7 @@
       },
 
       _onChange : function() {
-        this.parameters.s = this.$.input.value;
-
-        var params = [];
-        for( var key in this.parameters ) {
-          params.push(key+'='+encodeURIComponent(this.parameters[key]));
-        }
-
-        this.$.btn.href = this.rootUrl+'?'+params.join('&');
+        this.$.btn.href = this.rootUrl + '?post_type=article&s=' + this.$.input.value;
       }
     });
   </script>

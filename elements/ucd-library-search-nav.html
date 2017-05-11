@@ -34,8 +34,8 @@
         color: #fff;
         display: block;
         float: left;
-        height: 40px;
-        width: 75px;
+        height: 50px;
+        width: 80px;
         border: solid 1px #d6dce6;
         background: rgba(255, 255, 255, .3);
         padding: 0px 5px;
@@ -56,17 +56,17 @@
 
       @media(min-width: 700px) {
         button {
-          font-size: 16px;
-          height: 50px;
-          width: 100px;
+          font-size: 12px;
+          height: 65px;
+          width: 95px;
         }
       }
 
       @media(min-width: 900px) {
         button {
-          font-size: 18px;
+          font-size: 16px;
           height: 75px;
-          width: 125px;
+          width: 120px;
         }
       }
     </style>
@@ -77,9 +77,10 @@
     <div hidden$="[[!smallScreen]]">
       <select id="selector" on-change="_select" style="display:block; margin-bottom: 40px">
         <option value="library">Library Catalog + Articles</option>
+        <option value="courses">Course Reserves</option>
         <option value="databases">Databases</option>
-        <option value="calisphere">Calisphere</option>
         <option value="melvyl">Melvyl</option>
+        <option value="guide">Subject and Course Guides</option>
         <option value="website">Site Search</option>
       </select>
     </div>
@@ -87,11 +88,12 @@
     <div layout$="[[!largeScreen]]" hidden$="[[smallScreen]]">
       <div class="layout">
         <button on-click="_select" value="library"><div>Library Catalog + Articles</div></button>
+        <button on-click="_select" value="courses"><div>Course Reserves</div></button>
         <button on-click="_select" value="databases"><div>Databases</div></button>
-        <button on-click="_select" value="calisphere"><div>Calisphere</div></button>
       </div>
       <div class="layout center">
-        <button on-click="_select" value="melvyl"><div>Melvyl</div></button>
+        <button on-click="_select" value="melvyl"><div>All UC Libraries (Melvyl)</div></button>
+        <button on-click="_select" value="guide"><div>Subject and Course Guides</div></button>
         <button on-click="_select" value="website"><div>Site Search</div></button>
       </div>
     </div>

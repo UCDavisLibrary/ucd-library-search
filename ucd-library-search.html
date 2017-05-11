@@ -3,12 +3,11 @@
 <link rel="import" href="bower_components/iron-media-query/iron-media-query.html">
 
 <link rel="import" href="elements/styles.html">
-<link rel="import" href="elements/ucd-library-db-tax.html">
-<link rel="import" href="elements/ucd-library-filter-list.html">
 <link rel="import" href="elements/ucd-library-search-nav.html">
 <link rel="import" href="elements/ucd-library-search-catalog.html">
 <link rel="import" href="elements/ucd-library-search-databases.html">
-<link rel="import" href="elements/ucd-library-search-calisphere.html">
+<link rel="import" href="elements/ucd-library-search-guide.html">
+<link rel="import" href="elements/ucd-library-search-courses.html">
 <link rel="import" href="elements/ucd-library-search-melvyl.html">
 <link rel="import" href="elements/ucd-library-search-website.html">
 
@@ -52,7 +51,8 @@
         <iron-pages selected="{{section}}" attr-for-selected="section">
           <ucd-library-search-catalog section="library" ></ucd-library-search-catalog>
           <ucd-library-search-databases section="databases" ></ucd-library-search-databases>
-          <ucd-library-search-calisphere section="calisphere" ></ucd-library-search-calisphere>
+          <ucd-library-search-guide section="guide"></ucd-library-search-guide>
+          <ucd-library-search-courses section="courses" ></ucd-library-search-courses>
           <ucd-library-search-melvyl section="melvyl" ></ucd-library-search-melvyl>
           <ucd-library-search-website section="website" ></ucd-library-search-website>
         </iron-pages>
