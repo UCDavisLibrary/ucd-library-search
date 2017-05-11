@@ -24,7 +24,7 @@
       }
     </style>
 
-    <h1>UC Davis Library Catalog</h1>
+    <h1>Search Library Catalog + Articles</h1>
     <div class="help">
       Find books, ebooks, journals, movies and music, government documents, and more.
     </div>
@@ -45,11 +45,11 @@
 
     <div class="layout center">
 
-      <label for="extra" class="help flex" style="text-align: right">
-        Include online full-text journal articles available through the library
+      <label for="noextra" class="help flex" style="text-align: right">
+        Library Catalog only
       </label>
       <div>
-        <input type="checkbox" id="extra" on-change="setBtnHrefs"/>
+        <input type="checkbox" id="noextra" on-change="setBtnHrefs"/>
       </div>
     </div>
 
@@ -136,7 +136,7 @@
         var normalHref = [];
         var advancedHref = [];
 
-        if( !this.$.extra.checked ) {
+        if( this.$.noextra.checked ) {
           for( var key in this.parameters.catalog ) {
             normalHref.push(encodeURIComponent(key)+'='+encodeURIComponent(this.parameters.catalog[key]));
           }

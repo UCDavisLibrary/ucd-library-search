@@ -76,7 +76,7 @@
 
     <div hidden$="[[!smallScreen]]">
       <select id="selector" on-change="_select" style="display:block; margin-bottom: 40px">
-        <option value="library">Library Catalogs</option>
+        <option value="library">Library Catalog + Articles</option>
         <option value="databases">Databases</option>
         <option value="calisphere">Calisphere</option>
         <option value="melvyl">Melvyl</option>
@@ -86,7 +86,7 @@
 
     <div layout$="[[!largeScreen]]" hidden$="[[smallScreen]]">
       <div class="layout">
-        <button on-click="_select" value="library"><div>Library Catalogs</div></button>
+        <button on-click="_select" value="library"><div>Library Catalog + Articles</div></button>
         <button on-click="_select" value="databases"><div>Databases</div></button>
         <button on-click="_select" value="calisphere"><div>Calisphere</div></button>
       </div>
