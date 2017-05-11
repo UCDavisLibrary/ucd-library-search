@@ -24,13 +24,13 @@
       }
     </style>
 
-    <h1>UC Davis Library Catalog</h1>
+    <h1>Search Library Catalog + Articles</h1>
     <div class="help">
       Find books, ebooks, journals, movies and music, government documents, and more.
     </div>
     <div class="layout">
       <div class="flex">
-        <input type="text" placeholder="Search Library Catalog" on-keyup="_onKeyUp" />
+        <input type="text" id="input" placeholder="Search Library Catalog" on-keyup="_onKeyUp" on-change="_onChange" />
       </div>
       <div>
         <a class="search-btn" id="btn">Search</a>
@@ -45,11 +45,11 @@
 
     <div class="layout center">
 
-      <label for="extra" class="help flex" style="text-align: right">
-        Include online full-text journal articles available through the library
+      <label for="noextra" class="help flex" style="text-align: right">
+        Library Catalog only
       </label>
       <div>
-        <input type="checkbox" id="extra" on-change="setBtnHrefs"/>
+        <input type="checkbox" id="noextra" on-change="setBtnHrefs"/>
       </div>
     </div>
 
@@ -123,12 +123,18 @@
           window.location = this.$.btn.href;
           return;
         }
+        this._onChange();
+      },
 
+      _onChange : function() {
         var textkey = 'vl(freeText0)';
-        this.parameters.normal[textkey] = e.currentTarget.value;
-        this.parameters.catalog[textkey] = e.currentTarget.value;
-        this.parameters['advanced-catalog'][textkey] = e.currentTarget.value;
-        this.parameters['advanced-normal'][textkey] = e.currentTarget.value;
+
+        this.parameters.normal[textkey] = this.$.input.value;
+        this.parameters.catalog[textkey] = this.$.input.value;
+
+        this.parameters['advanced-catalog'][textkey] = this.$.input.value;
+        this.parameters['advanced-normal'][textkey] = this.$.input.value;
+
         this.setBtnHrefs();
       },
 
@@ -136,7 +142,7 @@
         var normalHref = [];
         var advancedHref = [];
 
-        if( !this.$.extra.checked ) {
+        if( this.$.noextra.checked ) {
           for( var key in this.parameters.catalog ) {
             normalHref.push(encodeURIComponent(key)+'='+encodeURIComponent(this.parameters.catalog[key]));
           }

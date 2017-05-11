@@ -33,20 +33,17 @@
     <h1>Databases</h1>
     <div class="help">Find collections of scholarly journal articles, digitized primary sources, streaming media, and more.</div>
 
-    <!--<div style="margin-bottom: 4px">By Catagory</div>
+
+    <!--<ucd-library-filter-list id="list" class="flex"></ucd-library-filter-list>-->
     <div class="layout">
       <div class="flex">
-        <select id="select" placeholder="Search Databases" on-change="_onChange" ></select>
+        <input id="input" type="text" placeholder="Search Databases" on-keyup="_onKeyUp" on-change="_onChange" />
       </div>
       <div>
-        <a id="btn" class="search-btn">Search</a>
+        <a class="search-btn" id="btn">Search</a>
       </div>
-    </div>-->
-
-    <div style="margin-bottom: 4px">By Catagory</div>
-    <div class="layout">
-      <ucd-library-filter-list id="list" class="flex"></ucd-library-filter-list>
     </div>
+
 
     <div style="padding: 4px 0">A-Z</div>
     <div id="az"></div>
@@ -62,31 +59,25 @@
 
       ready : function() {
 
-        var data = [];
-
-        // var html = '<option></option>';
-        for( var i = 0; i < UCD_LIB_DB_TAXONOMY.length; i++ ) {
-          var group = UCD_LIB_DB_TAXONOMY[i];
-          var items = group.tags_repeater[0].tags;
-          // html += '<optgroup label="'+group.anchor_label+'">';
-          data.push({
-            isHeader : true,
-            section : group.anchor_label
-          });
+        // var data = [];
+        // for( var i = 0; i < UCD_LIB_DB_TAXONOMY.length; i++ ) {
+        //   var group = UCD_LIB_DB_TAXONOMY[i];
+        //   var items = group.tags_repeater[0].tags;
+        //   data.push({
+        //     isHeader : true,
+        //     section : group.anchor_label
+        //   });
           
-          for( var j = 0; j < items.length; j++ ) {
-            // html += '<option value="'+items[j].slug+'">'+items[j].name+'</option>';
-            data.push({
-              section : group.anchor_label,
-              url : this.rootUrl + '/tag/' + items[j].slug,
-              label : items[j].name
-            });
-          }
+        //   for( var j = 0; j < items.length; j++ ) {
+        //     data.push({
+        //       section : group.anchor_label,
+        //       url : this.rootUrl + '/tag/' + items[j].slug,
+        //       label : items[j].name
+        //     });
+        //   }
 
-          // html += '</optgroup>';
-        }
-        // this.$.select.innerHTML = html;
-        this.$.list.data = data;
+        // }
+        // this.$.list.data = data;
 
         var html = '';
         var i = 'a'.charCodeAt(0), j = 'z'.charCodeAt(0);
@@ -97,11 +88,23 @@
         this.$.az.innerHTML = html;
       },
 
+      _onKeyUp : function(e) {
+        if( e.which === 13 ) {
+          window.location = this.$.btn.href;
+          return;
+        }
+        this._onChange();
+      },
+
       _onChange : function() {
-        var value = this.$.select.value;
-        if( !value ) this.$.btn.removeAttribute('href');
-        else this.$.btn.href = this.rootUrl + '/tag/' + value;
+        this.$.btn.href = this.rootUrl + '?post_type=database&s=' + this.$.input.value;
       }
+
+      // _onChange : function() {
+      //   var value = this.$.select.value;
+      //   if( !value ) this.$.btn.removeAttribute('href');
+      //   else this.$.btn.href = this.rootUrl + '/tag/' + value;
+      // }
     });
   </script>
 </dom-module>

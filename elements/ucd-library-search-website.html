@@ -18,7 +18,7 @@
 
     <div class="layout">
       <div class="flex">
-        <input type="text" placeholder="Search Website" on-keyup="_onKeyUp" />
+        <input type="text" id="input" placeholder="Search Website" on-keyup="_onKeyUp" on-change="_onChange" />
       </div>
       <div>
         <a class="search-btn" id="btn">Search</a>
@@ -41,8 +41,11 @@
           window.location = this.$.btn.href;
           return;
         }
+        this._onChange();
+      },
 
-        this.parameters.s = e.currentTarget.value;
+      _onChange : function() {
+        this.parameters.s = this.$.input.value;
 
         var params = [];
         for( var key in this.parameters ) {
