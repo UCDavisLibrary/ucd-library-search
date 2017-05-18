@@ -5,10 +5,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.18/webcomponents.min.js"></script>
     <style>
       body {
-        background-image: url('images/library_bkg.jpg');
-        background-size: 100% auto;
+        /*background-image: url('images/library_bkg.jpg');*/
+        /*background-size: 100% auto;
         background-repeat: no-repeat;
-        background-position: 0 0;
+        background-position: 0 0;*/
+        background: rgb(243, 243, 243);
         padding: 50px 0;
         text-align: center;
         font-family:proxima-nova,"Lucida Grande","Lucida Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -9810,6 +9811,13 @@ Example:
   });
 
 </script>
+<style is="custom-style">
+  :root {
+    --default-primary-color: #002655;
+    --default-secondary-color: #0048a2;
+  }
+</style>
+
 <dom-module id="shared-styles" assetpath="elements/">
   <template>
     <style>
@@ -9823,7 +9831,7 @@ Example:
       .search-btn {
         text-align: center;
         display: inline-block;
-        background: #002655;;
+        background: var(--default-primary-color);
         color: #fff;
         text-decoration: none;
         padding: 15px;
@@ -9835,7 +9843,7 @@ Example:
         cursor: pointer;
       }
       .search-btn:hover {
-        background: #0048a2;
+        background: var(--default-secondary-color);;
       }
 
       h1, h2 {
@@ -9844,13 +9852,23 @@ Example:
         font-weight: 100;
       }
 
+      .text {
+        color: white;
+        text-shadow: 1px 1px 1px black;
+      }
+
+      .text[flat] {
+        color: var(--default-primary-color);
+        text-shadow: none;
+      }
+
       select, input[type="text"] {
         box-sizing: border-box;
         display: block;
         width: 100%;
         background-color: white;
         padding: 15px;
-        color: #002655;
+        color: var(--default-primary-color);
         border: 1px solid #d6dce6;
         border-radius: 0;
         font-weight: 600;
@@ -9878,6 +9896,10 @@ Example:
         padding-bottom: 15px;
       }
 
+      [flat] .help {
+        color: #333;
+      }
+
       @media(max-width: 700px) {
         select, input[type="text"], .search-btn {
           padding: 10px;
@@ -9891,8 +9913,8 @@ Example:
 
       input[type="text"]:focus, select:focus {
         outline:0;
-        border: 1px solid #002655;
-        color: #002655;
+        border: 1px solid var(--default-primary-color);
+        color: var(--default-primary-color);
       }
 
       @keyframes bounceIn {
@@ -9983,6 +10005,16 @@ Example:
         z-index: 20;
       }
 
+      [flat] button {
+        background: white;
+        color: var(--default-primary-color);
+        text-shadow: none;
+      }
+      [flat] button.selected {
+        background: rgba(9, 51, 119, .8);
+        color: white;
+      }
+
       @media(min-width: 700px) {
         button {
           font-size: 12px;
@@ -10014,7 +10046,7 @@ Example:
       </select>
     </div>
 
-    <div layout$="[[!largeScreen]]" hidden$="[[smallScreen]]">
+    <div layout$="[[!largeScreen]]" hidden$="[[smallScreen]]" flat$="[[flat]]">
       <div class="layout">
         <button on-click="_select" value="library"><div>Library Catalog + Articles</div></button>
         <button on-click="_select" value="courses"><div>Course Reserves</div></button>
@@ -10038,6 +10070,10 @@ Example:
           type : String,
           value : 'library',
           notify : true
+        },
+        flat : {
+          type : Boolean,
+          value : false
         }
       },
 
@@ -10070,8 +10106,6 @@ Example:
     <style include="shared-styles"></style>
     <style>
       :host {
-        text-shadow: 1px 1px 1px black;
-        color: white;
         display: block;
 
         -webkit-animation:bounceIn 400ms ease-out;
@@ -10084,8 +10118,11 @@ Example:
         color: white;
         text-shadow: none;
       }
+      [flat] a[extra] {
+        color: var(--default-primary-color);
+      }
       a[extra]:hover {
-        color: #0048a2;
+        color: var(--default-secondary-color);
         text-decoration: underline;
       }
       [layout] {
@@ -10095,42 +10132,47 @@ Example:
 
     <iron-media-query query="min-width: 950px" query-matches="{{largeScreen}}"></iron-media-query>
 
-    <h1>Search Library Catalog + Articles</h1>
-    <div class="help">
-      Find books, ebooks, journals, movies and music, government documents, and more.
-    </div>
-    <div class="layout">
-      <div class="flex">
-        <input type="text" id="input" placeholder="Search Library Catalog + Articles" on-keyup="_onKeyUp" on-change="_onChange">
+    <div class="text" flat$="[[flat]]">
+      <h1>Search Library Catalog + Articles</h1>
+      <div class="help">
+        Find books, ebooks, journals, movies and music, government documents, and more.
       </div>
-      <div>
-        <a class="search-btn" id="btn">Search</a>
-      </div>
-    </div>
-
-    <div layout$="[[largeScreen]]">
-      <div class="layout center" style="padding-top: 5px">
-        <div>
-          <input type="checkbox" id="noextra" on-change="setBtnHrefs">
+      <div class="layout">
+        <div class="flex">
+          <input type="text" id="input" placeholder="Search Library Catalog + Articles" on-keyup="_onKeyUp" on-change="_onChange">
         </div>
-        <label for="noextra" class="flex" style="white-space: nowrap">
-          Library Catalog only
-        </label>
+        <div>
+          <a class="search-btn" id="btn">Search</a>
+        </div>
       </div>
 
-      <div style="text-align: right; padding: 5px 0" class="flex">
-        <a extra="" id="advanced">Advanced Search</a> | <a extra="" href="http://search.library.ucdavis.edu/primo_library/libweb/action/search.do?fn=showBrowse&amp;mode=BrowseSearch&amp;vid=01UCD_V1">Browse Search</a>
+      <div layout$="[[largeScreen]]">
+        <div class="layout center" style="padding-top: 5px">
+          <div>
+            <input type="checkbox" id="noextra" on-change="setBtnHrefs">
+          </div>
+          <label for="noextra" class="flex" style="white-space: nowrap">
+            Library Catalog only
+          </label>
+        </div>
+
+        <div style="text-align: right; padding: 5px 0" class="flex">
+          <a extra="" id="advanced">Advanced Search</a> | <a extra="" href="http://search.library.ucdavis.edu/primo_library/libweb/action/search.do?fn=showBrowse&amp;mode=BrowseSearch&amp;vid=01UCD_V1">Browse Search</a>
+        </div>
       </div>
     </div>
-    
-    
-
-    
 
   </template>
   <script>
     Polymer({
       is: 'ucd-library-search-catalog',
+
+      properties : {
+        flat : {
+          type : Boolean,
+          value : false
+        }
+      },
 
       rootUrl : 'http://search.library.ucdavis.edu/primo_library/libweb/action/search.do',
       // rootUrl : 'https://www.library.ucdavis.edu',
@@ -10244,8 +10286,6 @@ Example:
     <style include="shared-styles"></style>
     <style>
       :host {
-        color: white;
-        text-shadow: 1px 1px 1px black;
         display: block;
 
         -webkit-animation:bounceIn 400ms ease-out;
@@ -10265,28 +10305,34 @@ Example:
         transition: all 200ms linear;
       }
       #az a:hover {
-        color: #002655;
+        color: var(--default-secondary-color);
+        background: white;
+      }
+      [flat] #az a {
+        color: var(--default-primary-color);
         background: white;
       }
     </style>
 
-    <h1>Databases</h1>
-    <div class="help">Find collections of scholarly journal articles, digitized primary sources, streaming media, and more.</div>
+    <div class="text" flat$="[[flat]]">
+      <h1>Databases</h1>
+      <div class="help">Find collections of scholarly journal articles, digitized primary sources, streaming media, and more.</div>
 
-
-    <!--<ucd-library-filter-list id="list" class="flex"></ucd-library-filter-list>-->
-    <div class="layout">
-      <div class="flex">
-        <input id="input" type="text" placeholder="Search Databases" on-keyup="_onKeyUp" on-change="_onChange">
-      </div>
-      <div>
-        <a class="search-btn" id="btn">Search</a>
+      <div class="layout">
+        <div class="flex">
+          <input id="input" type="text" placeholder="Search Databases" on-keyup="_onKeyUp" on-change="_onChange">
+        </div>
+        <div>
+          <a class="search-btn" id="btn">Search</a>
+        </div>
       </div>
     </div>
 
 
-    <div style="padding: 4px 0">A-Z</div>
-    <div id="az"></div>
+    <div flat$="[[flat]]">
+      <div style="padding: 4px 0">A-Z</div>
+      <div id="az"></div>
+    </div>
 
     
 
@@ -10294,6 +10340,13 @@ Example:
   <script>
     Polymer({
       is: 'ucd-library-search-databases',
+
+      properties : {
+        flat : {
+          type : Boolean,
+          value : false
+        }
+      },
 
       rootUrl : 'https://www.library.ucdavis.edu',
 
@@ -10353,8 +10406,6 @@ Example:
     <style include="shared-styles"></style>
     <style>
       :host {
-        color: white;
-        text-shadow: 1px 1px 1px black;
         display: block;
 
         -webkit-animation:bounceIn 400ms ease-out;
@@ -10363,15 +10414,17 @@ Example:
       }
     </style>
 
-    <h1>Subject and Course Guides</h1>
-    <div class="help"></div>
+    <div class="text" flat$="[[flat]]">
+      <h1>Subject and Course Guides</h1>
+      <div class="help"></div>
 
-    <div class="layout">
-      <div class="flex">
-        <input id="input" type="text" placeholder="Search Subject and Course Guides" on-keyup="_onKeyUp" on-change="_onChange">
-      </div>
-      <div>
-        <a class="search-btn" id="btn">Search</a>
+      <div class="layout">
+        <div class="flex">
+          <input id="input" type="text" placeholder="Search Subject and Course Guides" on-keyup="_onKeyUp" on-change="_onChange">
+        </div>
+        <div>
+          <a class="search-btn" id="btn">Search</a>
+        </div>
       </div>
     </div>
 
@@ -10379,6 +10432,14 @@ Example:
   <script>
     Polymer({
       is: 'ucd-library-search-guide',
+      
+      
+      properties : {
+        flat : {
+          type : Boolean,
+          value : false
+        }
+      },
 
       rootUrl : 'https://www.library.ucdavis.edu',
 
@@ -10401,8 +10462,6 @@ Example:
     <style include="shared-styles"></style>
     <style>
       :host {
-        text-shadow: 1px 1px 1px black;
-        color: white;
         display: block;
 
         -webkit-animation:bounceIn 400ms ease-out;
@@ -10415,32 +10474,44 @@ Example:
         color: white;
         text-shadow: none;
       }
+      [flat] a[extra] {
+        color: var(--default-primary-color);
+      }
       a[extra]:hover {
-        color: #0048a2;
+        color: var(--default-secondary-color);
         text-decoration: underline;
       }
     </style>
 
-    <h1>Course Reserves</h1>
-    <div class="help"></div>
-    
-    <div class="layout">
-      <div class="flex">
-        <input type="text" id="input" placeholder="Search Course Reserves" on-keyup="_onKeyUp" on-change="_onChange">
+    <div class="text" flat$="[[flat]]">
+      <h1>Course Reserves</h1>
+      <div class="help"></div>
+      
+      <div class="layout">
+        <div class="flex">
+          <input type="text" id="input" placeholder="Search Course Reserves" on-keyup="_onKeyUp" on-change="_onChange">
+        </div>
+        <div>
+          <a class="search-btn" id="btn">Search</a>
+        </div>
       </div>
-      <div>
-        <a class="search-btn" id="btn">Search</a>
+      
+      <div style="text-align: right; padding: 5px 0">
+        <a extra="" id="advanced">Advanced Search</a> | <a extra="" href="http://search.library.ucdavis.edu/primo_library/libweb/action/search.do?fn=showBrowse&amp;mode=BrowseSearch&amp;vid=01UCD_V1&amp;tab=ucd_course_reserves&amp;dscnt=0">Browse Search</a>
       </div>
-    </div>
-    
-    <div style="text-align: right; padding: 5px 0">
-      <a extra="" id="advanced">Advanced Search</a> | <a extra="" href="http://search.library.ucdavis.edu/primo_library/libweb/action/search.do?fn=showBrowse&amp;mode=BrowseSearch&amp;vid=01UCD_V1&amp;tab=ucd_course_reserves&amp;dscnt=0">Browse Search</a>
     </div>
 
   </template>
   <script>
     Polymer({
       is: 'ucd-library-search-courses',
+
+      properties : {
+        flat : {
+          type : Boolean,
+          value : false
+        }
+      },
 
       rootUrl : 'http://search.library.ucdavis.edu/primo_library/libweb/action/search.do',
 
@@ -10507,8 +10578,6 @@ Example:
     <style include="shared-styles"></style>
     <style>
       :host {
-        color: white;
-        text-shadow: 1px 1px 1px black;
         display: block;
 
         -webkit-animation:bounceIn 400ms ease-out;
@@ -10518,15 +10587,17 @@ Example:
 
     </style>
 
-    <h1>All UC Libraries (Melvyl)</h1>
-    <div class="help">Find books, journals, media, and other materials held in UC libraries and other libraries worldwide.</div>
-    
-    <div class="layout">
-      <div class="flex">
-        <input type="text" id="input" placeholder="Search Melvyl" on-keyup="_onKeyUp" on-change="_onChange">
-      </div>
-      <div>
-        <a class="search-btn" id="btn">Search</a>
+    <div class="text" flat$="[[flat]]">
+      <h1>All UC Libraries (Melvyl)</h1>
+      <div class="help">Find books, journals, media, and other materials held in UC libraries and other libraries worldwide.</div>
+      
+      <div class="layout">
+        <div class="flex">
+          <input type="text" id="input" placeholder="Search Melvyl" on-keyup="_onKeyUp" on-change="_onChange">
+        </div>
+        <div>
+          <a class="search-btn" id="btn">Search</a>
+        </div>
       </div>
     </div>
 
@@ -10534,6 +10605,13 @@ Example:
   <script>
     Polymer({
       is: 'ucd-library-search-melvyl',
+
+      properties : {
+        flat : {
+          type : Boolean,
+          value : false
+        }
+      },
 
       rootUrl : 'https://www.library.ucdavis.edu',
       parameters : {
@@ -10566,8 +10644,6 @@ Example:
     <style include="shared-styles"></style>
     <style>
       :host {
-        color: white;
-        text-shadow: 1px 1px 1px black;
         display: block;
 
         -webkit-animation:bounceIn 400ms ease-out;
@@ -10576,15 +10652,17 @@ Example:
       }
     </style>
 
-    <h1>Site Search</h1>
-    <div class="help">Find research guides, manuscripts and archives, services and people.</div>
+    <div class="text" flat$="[[flat]]">
+      <h1>Site Search</h1>
+      <div class="help">Find research guides, manuscripts and archives, services and people.</div>
 
-    <div class="layout">
-      <div class="flex">
-        <input type="text" id="input" placeholder="Search Website" on-keyup="_onKeyUp" on-change="_onChange">
-      </div>
-      <div>
-        <a class="search-btn" id="btn">Search</a>
+      <div class="layout">
+        <div class="flex">
+          <input type="text" id="input" placeholder="Search Website" on-keyup="_onKeyUp" on-change="_onChange">
+        </div>
+        <div>
+          <a class="search-btn" id="btn">Search</a>
+        </div>
       </div>
     </div>
 
@@ -10592,6 +10670,13 @@ Example:
   <script>
     Polymer({
       is: 'ucd-library-search-website',
+
+      properties : {
+        flat : {
+          type : Boolean,
+          value : false
+        }
+      },
 
       rootUrl : 'https://www.library.ucdavis.edu',
       parameters : {
@@ -10632,6 +10717,11 @@ Example:
         min-width: 275px;
       }
 
+      :host([flat]) {
+        background: transparent;
+        box-shadow: none;
+      }
+
       @media(min-width: 900px) {
         :host {
           padding: 20px;
@@ -10653,16 +10743,16 @@ Example:
 
 
     <div layout$="[[largeScreen]]">
-      <ucd-library-search-nav selected="{{section}}"></ucd-library-search-nav>
+      <ucd-library-search-nav selected="{{section}}" flat="[[flat]]"></ucd-library-search-nav>
 
       <div flex$="[[largeScreen]]" padded$="[[largeScreen]]">
         <iron-pages selected="{{section}}" attr-for-selected="section">
-          <ucd-library-search-catalog section="library"></ucd-library-search-catalog>
-          <ucd-library-search-databases section="databases"></ucd-library-search-databases>
-          <ucd-library-search-guide section="guide"></ucd-library-search-guide>
-          <ucd-library-search-courses section="courses"></ucd-library-search-courses>
-          <ucd-library-search-melvyl section="melvyl"></ucd-library-search-melvyl>
-          <ucd-library-search-website section="website"></ucd-library-search-website>
+          <ucd-library-search-catalog section="library" flat="[[flat]]"></ucd-library-search-catalog>
+          <ucd-library-search-databases section="databases" flat="[[flat]]"></ucd-library-search-databases>
+          <ucd-library-search-guide section="guide" flat="[[flat]]"></ucd-library-search-guide>
+          <ucd-library-search-courses section="courses" flat="[[flat]]"></ucd-library-search-courses>
+          <ucd-library-search-melvyl section="melvyl" flat="[[flat]]"></ucd-library-search-melvyl>
+          <ucd-library-search-website section="website" flat="[[flat]]"></ucd-library-search-website>
         </iron-pages>
       </div>
     </div>
@@ -10676,6 +10766,11 @@ Example:
         section : {
           type : String,
           value : 'library'
+        },
+        flat : {
+          type : Boolean,
+          value : false,
+          reflectToAttribute: true
         }
       }
     });
@@ -10683,7 +10778,7 @@ Example:
 </dom-module>
 <script src="https://use.typekit.net/rbu0rqt.js"></script></div>
   
-    <ucd-library-search style="margin: auto"></ucd-library-search>
+    <ucd-library-search style="margin: auto" flat=""></ucd-library-search>
     
   
 </body></html>
