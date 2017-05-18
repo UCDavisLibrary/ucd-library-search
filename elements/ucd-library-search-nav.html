@@ -54,6 +54,16 @@
         z-index: 20;
       }
 
+      [flat] button {
+        background: white;
+        color: var(--default-primary-color);
+        text-shadow: none;
+      }
+      [flat] button.selected {
+        background: rgba(9, 51, 119, .8);
+        color: white;
+      }
+
       @media(min-width: 700px) {
         button {
           font-size: 12px;
@@ -85,7 +95,7 @@
       </select>
     </div>
 
-    <div layout$="[[!largeScreen]]" hidden$="[[smallScreen]]">
+    <div layout$="[[!largeScreen]]" hidden$="[[smallScreen]]" flat$="[[flat]]">
       <div class="layout">
         <button on-click="_select" value="library"><div>Library Catalog + Articles</div></button>
         <button on-click="_select" value="courses"><div>Course Reserves</div></button>
@@ -109,6 +119,10 @@
           type : String,
           value : 'library',
           notify : true
+        },
+        flat : {
+          type : Boolean,
+          value : false
         }
       },
 

@@ -4,8 +4,6 @@
     <style include="shared-styles"></style>
     <style>
       :host {
-        color: white;
-        text-shadow: 1px 1px 1px black;
         display: block;
 
         -webkit-animation:bounceIn 400ms ease-out;
@@ -14,15 +12,17 @@
       }
     </style>
 
-    <h1>Subject and Course Guides</h1>
-    <div class="help"></div>
+    <div class="text" flat$="[[flat]]">
+      <h1>Subject and Course Guides</h1>
+      <div class="help"></div>
 
-    <div class="layout">
-      <div class="flex">
-        <input id="input" type="text" placeholder="Search Subject and Course Guides" on-keyup="_onKeyUp" on-change="_onChange" />
-      </div>
-      <div>
-        <a class="search-btn" id="btn">Search</a>
+      <div class="layout">
+        <div class="flex">
+          <input id="input" type="text" placeholder="Search Subject and Course Guides" on-keyup="_onKeyUp" on-change="_onChange" />
+        </div>
+        <div>
+          <a class="search-btn" id="btn">Search</a>
+        </div>
       </div>
     </div>
 
@@ -30,6 +30,14 @@
   <script>
     Polymer({
       is: 'ucd-library-search-guide',
+      
+      
+      properties : {
+        flat : {
+          type : Boolean,
+          value : false
+        }
+      },
 
       rootUrl : 'https://www.library.ucdavis.edu',
 
