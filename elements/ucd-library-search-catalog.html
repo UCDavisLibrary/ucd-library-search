@@ -26,6 +26,12 @@
       [layout] {
         @apply(--layout-horizontal);
       }
+
+      /*hack for website layout */
+      input[type="checkbox"] {
+        width: auto
+      }
+
     </style>
 
     <iron-media-query query="min-width: 950px" query-matches="{{largeScreen}}"></iron-media-query>
@@ -49,7 +55,7 @@
           <div>
             <input type="checkbox" id="noextra" on-change="setBtnHrefs"/>
           </div>
-          <label for="noextra" class="flex" style="white-space: nowrap">
+          <label for="noextra" class="flex" style="white-space: nowrap; margin: 5px">
             Library Catalog only
           </label>
         </div>
