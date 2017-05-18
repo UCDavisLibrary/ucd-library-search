@@ -4,8 +4,6 @@
     <style include="shared-styles"></style>
     <style>
       :host {
-        color: white;
-        text-shadow: 1px 1px 1px black;
         display: block;
 
         -webkit-animation:bounceIn 400ms ease-out;
@@ -25,28 +23,34 @@
         transition: all 200ms linear;
       }
       #az a:hover {
-        color: #002655;
+        color: var(--default-secondary-color);
+        background: white;
+      }
+      [flat] #az a {
+        color: var(--default-primary-color);
         background: white;
       }
     </style>
 
-    <h1>Databases</h1>
-    <div class="help">Find collections of scholarly journal articles, digitized primary sources, streaming media, and more.</div>
+    <div class="text" flat$="[[flat]]">
+      <h1>Databases</h1>
+      <div class="help">Find collections of scholarly journal articles, digitized primary sources, streaming media, and more.</div>
 
-
-    <!--<ucd-library-filter-list id="list" class="flex"></ucd-library-filter-list>-->
-    <div class="layout">
-      <div class="flex">
-        <input id="input" type="text" placeholder="Search Databases" on-keyup="_onKeyUp" on-change="_onChange" />
-      </div>
-      <div>
-        <a class="search-btn" id="btn">Search</a>
+      <div class="layout">
+        <div class="flex">
+          <input id="input" type="text" placeholder="Search Databases" on-keyup="_onKeyUp" on-change="_onChange" />
+        </div>
+        <div>
+          <a class="search-btn" id="btn">Search</a>
+        </div>
       </div>
     </div>
 
 
-    <div style="padding: 4px 0">A-Z</div>
-    <div id="az"></div>
+    <div flat$="[[flat]]">
+      <div style="padding: 4px 0">A-Z</div>
+      <div id="az"></div>
+    </div>
 
     
 
@@ -54,6 +58,13 @@
   <script>
     Polymer({
       is: 'ucd-library-search-databases',
+
+      properties : {
+        flat : {
+          type : Boolean,
+          value : false
+        }
+      },
 
       rootUrl : 'https://www.library.ucdavis.edu',
 

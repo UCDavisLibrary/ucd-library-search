@@ -24,6 +24,11 @@
         min-width: 275px;
       }
 
+      :host([flat]) {
+        background: transparent;
+        box-shadow: none;
+      }
+
       @media(min-width: 900px) {
         :host {
           padding: 20px;
@@ -45,16 +50,16 @@
 
 
     <div layout$="[[largeScreen]]">
-      <ucd-library-search-nav selected="{{section}}"></ucd-library-search-nav>
+      <ucd-library-search-nav selected="{{section}}" flat="[[flat]]"></ucd-library-search-nav>
 
       <div flex$="[[largeScreen]]" padded$="[[largeScreen]]">
         <iron-pages selected="{{section}}" attr-for-selected="section">
-          <ucd-library-search-catalog section="library" ></ucd-library-search-catalog>
-          <ucd-library-search-databases section="databases" ></ucd-library-search-databases>
-          <ucd-library-search-guide section="guide"></ucd-library-search-guide>
-          <ucd-library-search-courses section="courses" ></ucd-library-search-courses>
-          <ucd-library-search-melvyl section="melvyl" ></ucd-library-search-melvyl>
-          <ucd-library-search-website section="website" ></ucd-library-search-website>
+          <ucd-library-search-catalog section="library" flat="[[flat]]"></ucd-library-search-catalog>
+          <ucd-library-search-databases section="databases" flat="[[flat]]"></ucd-library-search-databases>
+          <ucd-library-search-guide section="guide" flat="[[flat]]"></ucd-library-search-guide>
+          <ucd-library-search-courses section="courses" flat="[[flat]]"></ucd-library-search-courses>
+          <ucd-library-search-melvyl section="melvyl" flat="[[flat]]"></ucd-library-search-melvyl>
+          <ucd-library-search-website section="website" flat="[[flat]]"></ucd-library-search-website>
         </iron-pages>
       </div>
     </div>
@@ -68,6 +73,11 @@
         section : {
           type : String,
           value : 'library'
+        },
+        flat : {
+          type : Boolean,
+          value : false,
+          reflectToAttribute: true
         }
       }
     });

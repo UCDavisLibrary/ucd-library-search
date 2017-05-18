@@ -1,3 +1,10 @@
+<style is="custom-style">
+  :root {
+    --default-primary-color: #002655;
+    --default-secondary-color: #0048a2;
+  }
+</style>
+
 <dom-module id="shared-styles">
   <template>
     <style>
@@ -11,7 +18,7 @@
       .search-btn {
         text-align: center;
         display: inline-block;
-        background: #002655;;
+        background: var(--default-primary-color);
         color: #fff;
         text-decoration: none;
         padding: 15px;
@@ -23,7 +30,7 @@
         cursor: pointer;
       }
       .search-btn:hover {
-        background: #0048a2;
+        background: var(--default-secondary-color);;
       }
 
       h1, h2 {
@@ -32,13 +39,23 @@
         font-weight: 100;
       }
 
+      .text {
+        color: white;
+        text-shadow: 1px 1px 1px black;
+      }
+
+      .text[flat] {
+        color: var(--default-primary-color);
+        text-shadow: none;
+      }
+
       select, input[type="text"] {
         box-sizing: border-box;
         display: block;
         width: 100%;
         background-color: white;
         padding: 15px;
-        color: #002655;
+        color: var(--default-primary-color);
         border: 1px solid #d6dce6;
         border-radius: 0;
         font-weight: 600;
@@ -66,6 +83,10 @@
         padding-bottom: 15px;
       }
 
+      [flat] .help {
+        color: #333;
+      }
+
       @media(max-width: 700px) {
         select, input[type="text"], .search-btn {
           padding: 10px;
@@ -79,8 +100,8 @@
 
       input[type="text"]:focus, select:focus {
         outline:0;
-        border: 1px solid #002655;
-        color: #002655;
+        border: 1px solid var(--default-primary-color);
+        color: var(--default-primary-color);
       }
 
       @keyframes bounceIn {
