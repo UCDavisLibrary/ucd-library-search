@@ -9985,7 +9985,7 @@ Example:
         color: #fff;
         display: block;
         float: left;
-        height: 50px;
+        height: 65px;
         width: 80px;
         border: solid 1px #d6dce6;
         background: rgba(255, 255, 255, .3);
@@ -10128,6 +10128,12 @@ Example:
       [layout] {
         @apply(--layout-horizontal);
       }
+
+      /*hack for website layout */
+      input[type="checkbox"] {
+        width: auto
+      }
+
     </style>
 
     <iron-media-query query="min-width: 950px" query-matches="{{largeScreen}}"></iron-media-query>
@@ -10151,7 +10157,7 @@ Example:
           <div>
             <input type="checkbox" id="noextra" on-change="setBtnHrefs">
           </div>
-          <label for="noextra" class="flex" style="white-space: nowrap">
+          <label for="noextra" class="flex" style="white-space: nowrap; margin: 5px">
             Library Catalog only
           </label>
         </div>
@@ -10709,7 +10715,7 @@ Example:
     <style>
       :host {
         text-align: left;
-        max-width: 1100px;
+        max-width: 1200px;
         background: rgba(0, 0, 0, .2);
         box-shadow: 0 1px 3px #333;
         display: block;
