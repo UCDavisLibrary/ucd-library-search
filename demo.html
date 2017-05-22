@@ -9919,31 +9919,31 @@ Example:
 
       @keyframes bounceIn {
         0% {
-          transform: scale(0.1);
+          /*transform: scale(0.1);*/
           opacity: 0;
         }
         100% {
-          transform: scale(1);
+          /*transform: scale(1);*/
           opacity: 1;
         }
       }
       @keyframes -webkit-bounceIn {
         0% {
-          transform: scale(0.1);
+          /*transform: scale(0.1);*/
           opacity: 0;
         }
         100% {
-          transform: scale(1);
+          /*transform: scale(1);*/
           opacity: 1;
         }
       }
       @keyframes -webkit-bounceIn {
         0% {
-          transform: scale(0.1);
+          /*transform: scale(0.1);*/
           opacity: 0;
         }
         100% {
-          transform: scale(1);
+          /*transform: scale(1);*/
           opacity: 1;
         }
       }
@@ -10145,7 +10145,7 @@ Example:
       </div>
       <div class="layout">
         <div class="flex">
-          <input type="text" id="input" placeholder="Search Library Catalog + Articles" on-keyup="_onKeyUp" on-change="_onChange">
+          <input type="text" id="input" placeholder="Search Library Catalog + Articles" on-keyup="_onKeyUp" on-change="_onInputChange">
         </div>
         <div>
           <a class="search-btn" id="btn">Search</a>
@@ -10236,6 +10236,8 @@ Example:
         }
       },
 
+      behaviors : [SearchTextSyncBehavior],
+
       ready : function() {
         this.setBtnHrefs();
       },
@@ -10245,7 +10247,11 @@ Example:
           window.location = this.$.btn.href;
           return;
         }
-        this._onChange();
+        this._tiggerTextChange();
+      },
+
+      _onInputChange : function() {
+        this._tiggerTextChange();
       },
 
       _onChange : function() {
@@ -10326,7 +10332,7 @@ Example:
 
       <div class="layout">
         <div class="flex">
-          <input id="input" type="text" placeholder="Search Databases" on-keyup="_onKeyUp" on-change="_onChange">
+          <input id="input" type="text" placeholder="Search Databases" on-keyup="_onKeyUp" on-change="_onInputChange">
         </div>
         <div>
           <a class="search-btn" id="btn">Search</a>
@@ -10351,8 +10357,14 @@ Example:
         flat : {
           type : Boolean,
           value : false
+        },
+        hostUrl : {
+          type : Boolean,
+          value : false
         }
       },
+
+      behaviors : [SearchTextSyncBehavior],
 
       rootUrl : 'https://www.library.ucdavis.edu',
 
@@ -10371,16 +10383,20 @@ Example:
           window.location = this.$.btn.href;
           return;
         }
-        this._onChange();
+        this._tiggerTextChange();
+      },
+
+      _onInputChange : function() {
+        this._tiggerTextChange();
       },
 
       _onChange : function() {
-        this.$.btn.href = this.rootUrl + '?post_type=database&s=' + this.$.input.value;
+        this.$.btn.href = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl) + '?post_type=database&s=' + this.$.input.value;
       },
 
       setValue : function(val) {
         this.$.input.value = val;
-        this._onChange();
+        this._tiggerTextChange();
       }
     });
   </script>
@@ -10404,7 +10420,7 @@ Example:
 
       <div class="layout">
         <div class="flex">
-          <input id="input" type="text" placeholder="Search Subject and Course Guides" on-keyup="_onKeyUp" on-change="_onChange">
+          <input id="input" type="text" placeholder="Search Subject and Course Guides" on-keyup="_onKeyUp" on-change="_onInputChange">
         </div>
         <div>
           <a class="search-btn" id="btn">Search</a>
@@ -10422,8 +10438,14 @@ Example:
         flat : {
           type : Boolean,
           value : false
+        },
+        hostUrl : {
+          type : Boolean,
+          value : false
         }
       },
+
+      behaviors : [SearchTextSyncBehavior],
 
       rootUrl : 'https://www.library.ucdavis.edu',
 
@@ -10433,16 +10455,20 @@ Example:
           window.location = this.$.btn.href;
           return;
         }
-        this._onChange();
+        this._tiggerTextChange();
+      },
+
+      _onInputChange : function() {
+        this._tiggerTextChange();
       },
 
       _onChange : function() {
-        this.$.btn.href = this.rootUrl + '?post_type=article&s=' + this.$.input.value;
+        this.$.btn.href = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl)+ '?post_type=article&s=' + this.$.input.value;
       },
 
       setValue : function(val) {
         this.$.input.value = val;
-        this._onChange();
+        this._tiggerTextChange();
       }
     });
   </script>
@@ -10478,7 +10504,7 @@ Example:
       
       <div class="layout">
         <div class="flex">
-          <input type="text" id="input" placeholder="Search Course Reserves" on-keyup="_onKeyUp" on-change="_onChange">
+          <input type="text" id="input" placeholder="Search Course Reserves" on-keyup="_onKeyUp" on-change="_onInputChange">
         </div>
         <div>
           <a class="search-btn" id="btn">Search</a>
@@ -10524,6 +10550,8 @@ Example:
         }
       },
 
+      behaviors : [SearchTextSyncBehavior],
+
       ready : function() {
         this.setBtnHrefs();
       },
@@ -10533,7 +10561,11 @@ Example:
           window.location = this.$.btn.href;
           return;
         }
-        this._onChange();
+        this._tiggerTextChange();
+      },
+
+      _onInputChange : function() {
+        this._tiggerTextChange();
       },
 
       _onChange : function() {
@@ -10582,7 +10614,7 @@ Example:
       
       <div class="layout">
         <div class="flex">
-          <input type="text" id="input" placeholder="Search Melvyl" on-keyup="_onKeyUp" on-change="_onChange">
+          <input type="text" id="input" placeholder="Search Melvyl" on-keyup="_onKeyUp" on-change="_onInputChange">
         </div>
         <div>
           <a class="search-btn" id="btn">Search</a>
@@ -10608,12 +10640,18 @@ Example:
         'search-option' : '2'
       },
 
+      behaviors : [SearchTextSyncBehavior],
+
       _onKeyUp : function(e) {
         if( e.which === 13 ) {
           window.location = this.$.btn.href;
           return;
         }
-        this._onChange();
+        this._tiggerTextChange();
+      },
+
+      _onInputChange : function() {
+        this._tiggerTextChange();
       },
 
       _onChange : function() {
@@ -10647,7 +10685,7 @@ Example:
 
       <div class="layout">
         <div class="flex">
-          <input type="text" id="input" placeholder="Search Website" on-keyup="_onKeyUp" on-change="_onChange">
+          <input type="text" id="input" placeholder="Search Website" on-keyup="_onKeyUp" on-change="_onInputChange">
         </div>
         <div>
           <a class="search-btn" id="btn">Search</a>
@@ -10672,6 +10710,10 @@ Example:
         showFilter : {
           type : Boolean,
           value : false
+        },
+        hostUrl : {
+          type : Boolean,
+          value : false
         }
       },
 
@@ -10681,12 +10723,18 @@ Example:
         'search-option' : '3'
       },
 
+      behaviors : [SearchTextSyncBehavior],
+
       _onKeyUp : function(e) {
         if( e.which === 13 ) {
           window.location = this.$.btn.href;
           return;
         }
-        this._onChange();
+        this._tiggerTextChange();
+      },
+
+      _onInputChange : function() {
+        this._tiggerTextChange();
       },
 
       _onChange : function() {
@@ -10697,13 +10745,15 @@ Example:
           params.push(key+'='+encodeURIComponent(this.parameters[key]));
         }
 
-        this.$.btn.href = this.rootUrl+'?'+params.join('&');
-        this.$.btn2.href = this.rootUrl+'?'+params.join('&');
+        var root = this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl;
+
+        this.$.btn.href = root+'?'+params.join('&');
+        this.$.btn2.href = root+'?'+params.join('&');
       },
 
       setValue : function(val) {
         this.$.input.value = val;
-        this._onChange();
+        this._tiggerTextChange();
       },
 
       setFilter : function(value) {
@@ -10712,7 +10762,20 @@ Example:
       }
     });
   </script>
-</dom-module><dom-module id="ucd-library-search" assetpath="/">
+</dom-module><script src="search-text-sync.js">var SearchTextSyncBehavior = {
+  ready : function() {
+    window.addEventListener('ui-search-text-change', this._setSearchText.bind(this));
+  },
+  _tiggerTextChange : function() {
+    this.fire('ui-search-text-change', {value: this.$.input.value});
+  },
+  _setSearchText : function(e) {
+    this.$.input.value = e.detail.value;
+    this._onChange();
+  }
+}</script>
+
+<dom-module id="ucd-library-search" assetpath="/">
   <template>
     <style>
       :host {
@@ -10756,11 +10819,11 @@ Example:
       <div flex$="[[largeScreen]]" padded$="[[largeScreen]]">
         <iron-pages selected="{{section}}" attr-for-selected="id">
           <ucd-library-search-catalog id="library" flat="[[flat]]"></ucd-library-search-catalog>
-          <ucd-library-search-databases id="databases" flat="[[flat]]"></ucd-library-search-databases>
-          <ucd-library-search-guide id="guide" flat="[[flat]]"></ucd-library-search-guide>
+          <ucd-library-search-databases id="databases" flat="[[flat]]" host-url$="[[hostUrl]]"></ucd-library-search-databases>
+          <ucd-library-search-guide id="guide" flat="[[flat]]" host-url$="[[hostUrl]]"></ucd-library-search-guide>
           <ucd-library-search-courses id="courses" flat="[[flat]]"></ucd-library-search-courses>
           <ucd-library-search-melvyl id="melvyl" flat="[[flat]]"></ucd-library-search-melvyl>
-          <ucd-library-search-website id="website" flat="[[flat]]"></ucd-library-search-website>
+          <ucd-library-search-website id="website" flat="[[flat]]" host-url$="[[hostUrl]]"></ucd-library-search-website>
         </iron-pages>
       </div>
     </div>
@@ -10776,6 +10839,11 @@ Example:
           value : 'library'
         },
         flat : {
+          type : Boolean,
+          value : false,
+          reflectToAttribute: true
+        },
+        hostUrl : {
           type : Boolean,
           value : false,
           reflectToAttribute: true
@@ -10796,7 +10864,7 @@ Example:
         } else if( postType === 'database' ) {
           this.section = 'databases';
           this.$.databases.setValue(search);
-        } if( this.getParameterByName('search-option') === '3' || postType ) {
+        } else if( this.getParameterByName('search-option') === '3' || postType ) {
           this.section = 'website';
           this.$.website.setValue(search);
           if( postType ) {
