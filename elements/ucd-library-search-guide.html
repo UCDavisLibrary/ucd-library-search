@@ -18,7 +18,7 @@
 
       <div class="layout">
         <div class="flex">
-          <input id="input" type="text" placeholder="Search Subject and Course Guides" on-keyup="_onKeyUp" on-change="_onChange" />
+          <input id="input" type="text" placeholder="Search Subject and Course Guides" on-keyup="_onKeyUp" on-change="_onInputChange" />
         </div>
         <div>
           <a class="search-btn" id="btn">Search</a>
@@ -36,8 +36,14 @@
         flat : {
           type : Boolean,
           value : false
+        },
+        hostUrl : {
+          type : Boolean,
+          value : false
         }
       },
+
+      behaviors : [SearchTextSyncBehavior],
 
       rootUrl : 'https://www.library.ucdavis.edu',
 
@@ -47,16 +53,20 @@
           window.location = this.$.btn.href;
           return;
         }
-        this._onChange();
+        this._tiggerTextChange();
+      },
+
+      _onInputChange : function() {
+        this._tiggerTextChange();
       },
 
       _onChange : function() {
-        this.$.btn.href = this.rootUrl + '?post_type=article&s=' + this.$.input.value;
+        this.$.btn.href = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl)+ '?post_type=article&s=' + this.$.input.value;
       },
 
       setValue : function(val) {
         this.$.input.value = val;
-        this._onChange();
+        this._tiggerTextChange();
       }
     });
   </script>

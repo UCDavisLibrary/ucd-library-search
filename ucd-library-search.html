@@ -1,3 +1,5 @@
+<script src="search-text-sync.js"></script>
+
 <link rel="import" href="bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="bower_components/iron-media-query/iron-media-query.html">
@@ -55,11 +57,11 @@
       <div flex$="[[largeScreen]]" padded$="[[largeScreen]]">
         <iron-pages selected="{{section}}" attr-for-selected="id">
           <ucd-library-search-catalog id="library" flat="[[flat]]"></ucd-library-search-catalog>
-          <ucd-library-search-databases id="databases" flat="[[flat]]"></ucd-library-search-databases>
-          <ucd-library-search-guide id="guide" flat="[[flat]]"></ucd-library-search-guide>
+          <ucd-library-search-databases id="databases" flat="[[flat]]" host-url$="[[hostUrl]]"></ucd-library-search-databases>
+          <ucd-library-search-guide id="guide" flat="[[flat]]" host-url$="[[hostUrl]]"></ucd-library-search-guide>
           <ucd-library-search-courses id="courses" flat="[[flat]]"></ucd-library-search-courses>
           <ucd-library-search-melvyl id="melvyl" flat="[[flat]]"></ucd-library-search-melvyl>
-          <ucd-library-search-website id="website" flat="[[flat]]"></ucd-library-search-website>
+          <ucd-library-search-website id="website" flat="[[flat]]" host-url$="[[hostUrl]]"></ucd-library-search-website>
         </iron-pages>
       </div>
     </div>
@@ -75,6 +77,11 @@
           value : 'library'
         },
         flat : {
+          type : Boolean,
+          value : false,
+          reflectToAttribute: true
+        },
+        hostUrl : {
           type : Boolean,
           value : false,
           reflectToAttribute: true
@@ -95,7 +102,7 @@
         } else if( postType === 'database' ) {
           this.section = 'databases';
           this.$.databases.setValue(search);
-        } if( this.getParameterByName('search-option') === '3' || postType ) {
+        } else if( this.getParameterByName('search-option') === '3' || postType ) {
           this.section = 'website';
           this.$.website.setValue(search);
           if( postType ) {
