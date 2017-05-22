@@ -111,42 +111,49 @@
     
   </template>
   <script>
-    Polymer({
-      is: 'ucd-library-search-nav',
+    class UCDLibrarySearchNav extends UCDLibrarySearchBase {
+      static get is() { 
+        return 'ucd-library-search-nav'; 
+      }
 
-      properties : {
-        selected : {
-          type : String,
-          value : 'library',
-          notify : true
-        },
-        flat : {
-          type : Boolean,
-          value : false
+      static get properties() {
+        return {
+          selected : {
+            type : String,
+            value : 'library',
+            notify : true
+          },
+          flat : {
+            type : Boolean,
+            value : false
+          }
         }
-      },
+      }
 
-      attached : function() {
+      connectedCallback() {
+        super.connectedCallback();
         this._resetBtns();
 
         this.querySelector('button[value="'+this.selected+'"]').classList.add('selected');
         this.$.selector.value = this.selected;
-      },
+      }
 
-      _select : function(e) {
+      _select(e) {
         this._resetBtns();
 
         this.selected = e.currentTarget.value || e.currentTarget.getAttribute('value');
         this.querySelector('button[value="'+this.selected+'"]').classList.add('selected');
         this.$.selector.value = this.selected;
-      },
+      }
 
-      _resetBtns : function() {
+      _resetBtns() {
         var eles = this.querySelectorAll('button');
         for( var i = 0; i < eles.length; i++ ) {
           eles[i].classList.remove('selected');
         }
       }
-    });
+    }
+
+    window.customElements.define(UCDLibrarySearchNav.is, UCDLibrarySearchNav);
   </script>
 </dom-module>

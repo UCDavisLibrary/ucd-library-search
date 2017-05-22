@@ -1,0 +1,17 @@
+<script>
+  class UCDLibrarySearchBase extends Polymer.Element {
+    ready() {
+      super.ready();
+      window.addEventListener('ui-search-text-change', this._setSearchText.bind(this));
+    }
+    
+    _tiggerTextChange() {
+      this.fire('ui-search-text-change', {value: this.$.input.value});
+    }
+    
+    _setSearchText(e) {
+      this.$.input.value = e.detail.value;
+      this._onChange();
+    }
+  }
+</script>

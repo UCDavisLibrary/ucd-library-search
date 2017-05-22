@@ -45,64 +45,70 @@
 
   </template>
   <script>
-    Polymer({
-      is: 'ucd-library-search-courses',
+    class UCDLibrarySearchCourses extends UCDLibrarySearchBase {
+      static get is() { 
+        return 'ucd-library-search-courses'; 
+      }
 
-      properties : {
-        flat : {
-          type : Boolean,
-          value : false
+      static get properties() {
+        return {
+          flat : {
+            type : Boolean,
+            value : false
+          }
         }
-      },
+      }
 
-      rootUrl : 'http://search.library.ucdavis.edu/primo_library/libweb/action/search.do',
+      constructor() {
+        super();
+        this.rootUrl = 'http://search.library.ucdavis.edu/primo_library/libweb/action/search.do';
 
-      parameters : {
-        normal : {
-          mode : 'Basic',
-          vid : '01UCD_V1',
-          'vl(freeText0)' : '',
-          fn : 'search',
-          tab : 'ucd_course_reserves'
-        },
-        advanced : {
-          mode : 'Advanced',
-          ct : 'AdvancedSearch',
-          vid : '01UCD_V1', 
-          tab : 'ucd_course_reserves',
-          fn : 'search',
-          indx : 1,
-          dscnt : 0,
-          'vl(freeText0)' : ''
+        this.parameters = {
+          normal : {
+            mode : 'Basic',
+            vid : '01UCD_V1',
+            'vl(freeText0)' : '',
+            fn : 'search',
+            tab : 'ucd_course_reserves'
+          },
+          advanced : {
+            mode : 'Advanced',
+            ct : 'AdvancedSearch',
+            vid : '01UCD_V1', 
+            tab : 'ucd_course_reserves',
+            fn : 'search',
+            indx : 1,
+            dscnt : 0,
+            'vl(freeText0)' : ''
+          }
         }
-      },
+      }
 
-      behaviors : [SearchTextSyncBehavior],
-
-      ready : function() {
+      ready() {
+        super.ready();
         this.setBtnHrefs();
-      },
+      }
 
-      _onKeyUp : function(e) {
+      _onKeyUp(e) {
         if( e.which === 13 ) {
           window.location = this.$.btn.href;
           return;
         }
         this._tiggerTextChange();
-      },
+      }
 
-      _onInputChange : function() {
+      _onInputChange() {
         this._tiggerTextChange();
-      },
+      }
 
-      _onChange : function() {
+      _onChange() {
         var textkey = 'vl(freeText0)';
         this.parameters.normal[textkey] = this.$.input.value;
         this.parameters.advanced[textkey] = this.$.input.value;
         this.setBtnHrefs();
-      },
+      }
 
-      setBtnHrefs : function() {
+      setBtnHrefs() {
         var normalHref = [];
         var advancedHref = [];
 
@@ -118,6 +124,8 @@
         this.$.advanced.href = this.rootUrl+'?'+advancedHref.join('&');
       }
 
-    });
+    }
+
+    window.customElements.define(UCDLibrarySearchCourses.is, UCDLibrarySearchCourses);
   </script>
 </dom-module>

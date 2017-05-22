@@ -28,46 +28,51 @@
 
   </template>
   <script>
-    Polymer({
-      is: 'ucd-library-search-guide',
-      
-      
-      properties : {
-        flat : {
-          type : Boolean,
-          value : false
-        },
-        hostUrl : {
-          type : Boolean,
-          value : false
+    class UCDLibrarySearchGuide extends UCDLibrarySearchBase {
+      static get is() { 
+        return 'ucd-library-search-guide'; 
+      }
+
+      static get properties() {
+        return {
+          flat : {
+            type : Boolean,
+            value : false
+          },
+          hostUrl : {
+            type : Boolean,
+            value : false
+          }
         }
-      },
+      }
 
-      behaviors : [SearchTextSyncBehavior],
+      constructor() {
+        super();
+        this.rootUrl = 'https://www.library.ucdavis.edu';
+      }
 
-      rootUrl : 'https://www.library.ucdavis.edu',
-
-
-      _onKeyUp : function(e) {
+      _onKeyUp(e) {
         if( e.which === 13 ) {
           window.location = this.$.btn.href;
           return;
         }
         this._tiggerTextChange();
-      },
+      }
 
-      _onInputChange : function() {
+      _onInputChange() {
         this._tiggerTextChange();
-      },
+      }
 
-      _onChange : function() {
+      _onChange() {
         this.$.btn.href = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl)+ '?post_type=article&s=' + this.$.input.value;
-      },
+      }
 
-      setValue : function(val) {
+      setValue(val) {
         this.$.input.value = val;
         this._tiggerTextChange();
       }
-    });
+    }
+
+    window.customElements.define(UCDLibrarySearchGuide.is, UCDLibrarySearchGuide);
   </script>
 </dom-module>
