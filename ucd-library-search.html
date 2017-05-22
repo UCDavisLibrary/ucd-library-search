@@ -95,7 +95,7 @@
         } else if( postType === 'database' ) {
           this.section = 'databases';
           this.$.databases.setValue(search);
-        } if( this.getParameterByName('search-option') === '3' || postType ) {
+        } else if( this.getParameterByName('search-option') === '3' || postType ) {
           this.section = 'website';
           this.$.website.setValue(search);
           if( postType ) {
