@@ -23,6 +23,10 @@
           <a class="search-btn" id="btn">Search</a>
         </div>
       </div>
+
+      <div hidden="[[!showFilter]]" style="margin-top: 15px; font-size: 14px">
+        <span style="color:#666">Filtered by: </span> <b style="color: #333">[[filterValue]]</b> | <a id="btn2">Remove Filter</a>
+      </div>
     </div>
 
   </template>
@@ -32,6 +36,10 @@
 
       properties : {
         flat : {
+          type : Boolean,
+          value : false
+        },
+        showFilter : {
           type : Boolean,
           value : false
         }
@@ -60,6 +68,17 @@
         }
 
         this.$.btn.href = this.rootUrl+'?'+params.join('&');
+        this.$.btn2.href = this.rootUrl+'?'+params.join('&');
+      },
+
+      setValue : function(val) {
+        this.$.input.value = val;
+        this._onChange();
+      },
+
+      setFilter : function(value) {
+        this.showFilter = true;
+        this.filterValue = value;
       }
     });
   </script>
