@@ -74,11 +74,13 @@
 
       rootUrl : 'https://www.library.ucdavis.edu',
 
-      ready : function() {
+      attached : function() {
         var html = '';
         var i = 'a'.charCodeAt(0), j = 'z'.charCodeAt(0);
+
+        var url = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl);
         for (; i <= j; ++i) {
-            html += '<a class="style-scope ucd-library-search-databases" href="'+this.rootUrl+'/az-database/'+String.fromCharCode(i)+'">'+String.fromCharCode(i)+'</a>';
+            html += '<a class="style-scope ucd-library-search-databases" href="'+url+'/az-database/'+String.fromCharCode(i)+'">'+String.fromCharCode(i)+'</a>';
         }
 
         this.$.az.innerHTML = html;
