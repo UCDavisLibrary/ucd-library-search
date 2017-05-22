@@ -10357,27 +10357,6 @@ Example:
       rootUrl : 'https://www.library.ucdavis.edu',
 
       ready : function() {
-
-        // var data = [];
-        // for( var i = 0; i < UCD_LIB_DB_TAXONOMY.length; i++ ) {
-        //   var group = UCD_LIB_DB_TAXONOMY[i];
-        //   var items = group.tags_repeater[0].tags;
-        //   data.push({
-        //     isHeader : true,
-        //     section : group.anchor_label
-        //   });
-          
-        //   for( var j = 0; j < items.length; j++ ) {
-        //     data.push({
-        //       section : group.anchor_label,
-        //       url : this.rootUrl + '/tag/' + items[j].slug,
-        //       label : items[j].name
-        //     });
-        //   }
-
-        // }
-        // this.$.list.data = data;
-
         var html = '';
         var i = 'a'.charCodeAt(0), j = 'z'.charCodeAt(0);
         for (; i <= j; ++i) {
@@ -10397,13 +10376,12 @@ Example:
 
       _onChange : function() {
         this.$.btn.href = this.rootUrl + '?post_type=database&s=' + this.$.input.value;
-      }
+      },
 
-      // _onChange : function() {
-      //   var value = this.$.select.value;
-      //   if( !value ) this.$.btn.removeAttribute('href');
-      //   else this.$.btn.href = this.rootUrl + '/tag/' + value;
-      // }
+      setValue : function(val) {
+        this.$.input.value = val;
+        this._onChange();
+      }
     });
   </script>
 </dom-module>
@@ -10460,6 +10438,11 @@ Example:
 
       _onChange : function() {
         this.$.btn.href = this.rootUrl + '?post_type=article&s=' + this.$.input.value;
+      },
+
+      setValue : function(val) {
+        this.$.input.value = val;
+        this._onChange();
       }
     });
   </script>
@@ -10670,6 +10653,10 @@ Example:
           <a class="search-btn" id="btn">Search</a>
         </div>
       </div>
+
+      <div hidden="[[!showFilter]]" style="margin-top: 15px; font-size: 14px">
+        <span style="color:#666">Filtered by: </span> <b style="color: #333">[[filterValue]]</b> | <a id="btn2">Remove Filter</a>
+      </div>
     </div>
 
   </template>
@@ -10679,6 +10666,10 @@ Example:
 
       properties : {
         flat : {
+          type : Boolean,
+          value : false
+        },
+        showFilter : {
           type : Boolean,
           value : false
         }
@@ -10707,6 +10698,17 @@ Example:
         }
 
         this.$.btn.href = this.rootUrl+'?'+params.join('&');
+        this.$.btn2.href = this.rootUrl+'?'+params.join('&');
+      },
+
+      setValue : function(val) {
+        this.$.input.value = val;
+        this._onChange();
+      },
+
+      setFilter : function(value) {
+        this.showFilter = true;
+        this.filterValue = value;
       }
     });
   </script>
@@ -10752,13 +10754,13 @@ Example:
       <ucd-library-search-nav selected="{{section}}" flat="[[flat]]"></ucd-library-search-nav>
 
       <div flex$="[[largeScreen]]" padded$="[[largeScreen]]">
-        <iron-pages selected="{{section}}" attr-for-selected="section">
-          <ucd-library-search-catalog section="library" flat="[[flat]]"></ucd-library-search-catalog>
-          <ucd-library-search-databases section="databases" flat="[[flat]]"></ucd-library-search-databases>
-          <ucd-library-search-guide section="guide" flat="[[flat]]"></ucd-library-search-guide>
-          <ucd-library-search-courses section="courses" flat="[[flat]]"></ucd-library-search-courses>
-          <ucd-library-search-melvyl section="melvyl" flat="[[flat]]"></ucd-library-search-melvyl>
-          <ucd-library-search-website section="website" flat="[[flat]]"></ucd-library-search-website>
+        <iron-pages selected="{{section}}" attr-for-selected="id">
+          <ucd-library-search-catalog id="library" flat="[[flat]]"></ucd-library-search-catalog>
+          <ucd-library-search-databases id="databases" flat="[[flat]]"></ucd-library-search-databases>
+          <ucd-library-search-guide id="guide" flat="[[flat]]"></ucd-library-search-guide>
+          <ucd-library-search-courses id="courses" flat="[[flat]]"></ucd-library-search-courses>
+          <ucd-library-search-melvyl id="melvyl" flat="[[flat]]"></ucd-library-search-melvyl>
+          <ucd-library-search-website id="website" flat="[[flat]]"></ucd-library-search-website>
         </iron-pages>
       </div>
     </div>
@@ -10778,6 +10780,40 @@ Example:
           value : false,
           reflectToAttribute: true
         }
+      },
+
+      ready : function() {
+
+        /**
+         * Check UCD library url parameters
+         */
+        var postType = this.getParameterByName('post_type');
+        var search = this.getParameterByName('s');
+
+        if( postType === 'article' ) {
+          this.section = 'guide';
+          this.$.guide.setValue(search);
+        } else if( postType === 'database' ) {
+          this.section = 'databases';
+          this.$.databases.setValue(search);
+        } if( this.getParameterByName('search-option') === '3' || postType ) {
+          this.section = 'website';
+          this.$.website.setValue(search);
+          if( postType ) {
+            this.$.website.setFilter(postType);
+          }
+        }
+
+      },
+
+      getParameterByName : function(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
       }
     });
   </script>
