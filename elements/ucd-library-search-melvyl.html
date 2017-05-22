@@ -19,7 +19,7 @@
       
       <div class="layout">
         <div class="flex">
-          <input type="text" id="input" placeholder="Search Melvyl" on-keyup="_onKeyUp" on-change="_onChange" />
+          <input type="text" id="input" placeholder="Search Melvyl" on-keyup="_onKeyUp" on-change="_onInputChange" />
         </div>
         <div>
           <a class="search-btn" id="btn">Search</a>
@@ -45,12 +45,18 @@
         'search-option' : '2'
       },
 
+      behaviors : [SearchTextSyncBehavior],
+
       _onKeyUp : function(e) {
         if( e.which === 13 ) {
           window.location = this.$.btn.href;
           return;
         }
-        this._onChange();
+        this._tiggerTextChange();
+      },
+
+      _onInputChange : function() {
+        this._tiggerTextChange();
       },
 
       _onChange : function() {
