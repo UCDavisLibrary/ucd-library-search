@@ -134,7 +134,7 @@
         super.connectedCallback();
         this._resetBtns();
 
-        this.querySelector('button[value="'+this.selected+'"]').classList.add('selected');
+        this.shadowRoot.querySelector('button[value="'+this.selected+'"]').classList.add('selected');
         this.$.selector.value = this.selected;
       }
 
@@ -142,12 +142,12 @@
         this._resetBtns();
 
         this.selected = e.currentTarget.value || e.currentTarget.getAttribute('value');
-        this.querySelector('button[value="'+this.selected+'"]').classList.add('selected');
+        this.shadowRoot.querySelector('button[value="'+this.selected+'"]').classList.add('selected');
         this.$.selector.value = this.selected;
       }
 
       _resetBtns() {
-        var eles = this.querySelectorAll('button');
+        var eles = this.shadowRoot.querySelectorAll('button');
         for( var i = 0; i < eles.length; i++ ) {
           eles[i].classList.remove('selected');
         }
