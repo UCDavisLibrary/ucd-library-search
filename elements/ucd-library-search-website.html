@@ -42,6 +42,10 @@
         showFilter : {
           type : Boolean,
           value : false
+        },
+        hostUrl : {
+          type : Boolean,
+          value : false
         }
       },
 
@@ -67,8 +71,10 @@
           params.push(key+'='+encodeURIComponent(this.parameters[key]));
         }
 
-        this.$.btn.href = this.rootUrl+'?'+params.join('&');
-        this.$.btn2.href = this.rootUrl+'?'+params.join('&');
+        var root = this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl;
+
+        this.$.btn.href = root+'?'+params.join('&');
+        this.$.btn2.href = root+'?'+params.join('&');
       },
 
       setValue : function(val) {

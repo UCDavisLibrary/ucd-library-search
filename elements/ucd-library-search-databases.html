@@ -63,6 +63,10 @@
         flat : {
           type : Boolean,
           value : false
+        },
+        hostUrl : {
+          type : Boolean,
+          value : false
         }
       },
 
@@ -87,7 +91,7 @@
       },
 
       _onChange : function() {
-        this.$.btn.href = this.rootUrl + '?post_type=database&s=' + this.$.input.value;
+        this.$.btn.href = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl) + '?post_type=database&s=' + this.$.input.value;
       },
 
       setValue : function(val) {

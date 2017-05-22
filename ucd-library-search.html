@@ -55,11 +55,11 @@
       <div flex$="[[largeScreen]]" padded$="[[largeScreen]]">
         <iron-pages selected="{{section}}" attr-for-selected="id">
           <ucd-library-search-catalog id="library" flat="[[flat]]"></ucd-library-search-catalog>
-          <ucd-library-search-databases id="databases" flat="[[flat]]"></ucd-library-search-databases>
-          <ucd-library-search-guide id="guide" flat="[[flat]]"></ucd-library-search-guide>
+          <ucd-library-search-databases id="databases" flat="[[flat]]" host-url$="[[hostUrl]]"></ucd-library-search-databases>
+          <ucd-library-search-guide id="guide" flat="[[flat]]" host-url$="[[hostUrl]]"></ucd-library-search-guide>
           <ucd-library-search-courses id="courses" flat="[[flat]]"></ucd-library-search-courses>
           <ucd-library-search-melvyl id="melvyl" flat="[[flat]]"></ucd-library-search-melvyl>
-          <ucd-library-search-website id="website" flat="[[flat]]"></ucd-library-search-website>
+          <ucd-library-search-website id="website" flat="[[flat]]" host-url$="[[hostUrl]]"></ucd-library-search-website>
         </iron-pages>
       </div>
     </div>
@@ -75,6 +75,11 @@
           value : 'library'
         },
         flat : {
+          type : Boolean,
+          value : false,
+          reflectToAttribute: true
+        },
+        hostUrl : {
           type : Boolean,
           value : false,
           reflectToAttribute: true
@@ -102,6 +107,8 @@
             this.$.website.setFilter(postType);
           }
         }
+
+        console.log(this.hostUrl);
 
       },
 
