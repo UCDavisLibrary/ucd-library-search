@@ -1,3 +1,3 @@
 #! /bin/bash
 
-vulcanize ucd-library-search.html > build/ucd-library-search.html
+vulcanize --inline-scripts ucd-library-search.html > build/ucd-library-search.html
