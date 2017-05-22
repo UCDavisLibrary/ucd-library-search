@@ -53,13 +53,13 @@
       <ucd-library-search-nav selected="{{section}}" flat="[[flat]]"></ucd-library-search-nav>
 
       <div flex$="[[largeScreen]]" padded$="[[largeScreen]]">
-        <iron-pages selected="{{section}}" attr-for-selected="section">
-          <ucd-library-search-catalog section="library" flat="[[flat]]"></ucd-library-search-catalog>
-          <ucd-library-search-databases section="databases" flat="[[flat]]"></ucd-library-search-databases>
-          <ucd-library-search-guide section="guide" flat="[[flat]]"></ucd-library-search-guide>
-          <ucd-library-search-courses section="courses" flat="[[flat]]"></ucd-library-search-courses>
-          <ucd-library-search-melvyl section="melvyl" flat="[[flat]]"></ucd-library-search-melvyl>
-          <ucd-library-search-website section="website" flat="[[flat]]"></ucd-library-search-website>
+        <iron-pages selected="{{section}}" attr-for-selected="id">
+          <ucd-library-search-catalog id="library" flat="[[flat]]"></ucd-library-search-catalog>
+          <ucd-library-search-databases id="databases" flat="[[flat]]"></ucd-library-search-databases>
+          <ucd-library-search-guide id="guide" flat="[[flat]]"></ucd-library-search-guide>
+          <ucd-library-search-courses id="courses" flat="[[flat]]"></ucd-library-search-courses>
+          <ucd-library-search-melvyl id="melvyl" flat="[[flat]]"></ucd-library-search-melvyl>
+          <ucd-library-search-website id="website" flat="[[flat]]"></ucd-library-search-website>
         </iron-pages>
       </div>
     </div>
@@ -79,6 +79,40 @@
           value : false,
           reflectToAttribute: true
         }
+      },
+
+      ready : function() {
+
+        /**
+         * Check UCD library url parameters
+         */
+        var postType = this.getParameterByName('post_type');
+        var search = this.getParameterByName('s');
+
+        if( postType === 'article' ) {
+          this.section = 'guide';
+          this.$.guide.setValue(search);
+        } else if( postType === 'database' ) {
+          this.section = 'databases';
+          this.$.databases.setValue(search);
+        } if( this.getParameterByName('search-option') === '3' || postType ) {
+          this.section = 'website';
+          this.$.website.setValue(search);
+          if( postType ) {
+            this.$.website.setFilter(postType);
+          }
+        }
+
+      },
+
+      getParameterByName : function(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
       }
     });
   </script>

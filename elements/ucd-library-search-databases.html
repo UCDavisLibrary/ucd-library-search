@@ -69,27 +69,6 @@
       rootUrl : 'https://www.library.ucdavis.edu',
 
       ready : function() {
-
-        // var data = [];
-        // for( var i = 0; i < UCD_LIB_DB_TAXONOMY.length; i++ ) {
-        //   var group = UCD_LIB_DB_TAXONOMY[i];
-        //   var items = group.tags_repeater[0].tags;
-        //   data.push({
-        //     isHeader : true,
-        //     section : group.anchor_label
-        //   });
-          
-        //   for( var j = 0; j < items.length; j++ ) {
-        //     data.push({
-        //       section : group.anchor_label,
-        //       url : this.rootUrl + '/tag/' + items[j].slug,
-        //       label : items[j].name
-        //     });
-        //   }
-
-        // }
-        // this.$.list.data = data;
-
         var html = '';
         var i = 'a'.charCodeAt(0), j = 'z'.charCodeAt(0);
         for (; i <= j; ++i) {
@@ -109,13 +88,12 @@
 
       _onChange : function() {
         this.$.btn.href = this.rootUrl + '?post_type=database&s=' + this.$.input.value;
-      }
+      },
 
-      // _onChange : function() {
-      //   var value = this.$.select.value;
-      //   if( !value ) this.$.btn.removeAttribute('href');
-      //   else this.$.btn.href = this.rootUrl + '/tag/' + value;
-      // }
+      setValue : function(val) {
+        this.$.input.value = val;
+        this._onChange();
+      }
     });
   </script>
 </dom-module>

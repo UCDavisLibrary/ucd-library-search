@@ -52,6 +52,11 @@
 
       _onChange : function() {
         this.$.btn.href = this.rootUrl + '?post_type=article&s=' + this.$.input.value;
+      },
+
+      setValue : function(val) {
+        this.$.input.value = val;
+        this._onChange();
       }
     });
   </script>
