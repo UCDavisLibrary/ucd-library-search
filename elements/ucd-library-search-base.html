@@ -6,7 +6,15 @@
     }
     
     _tiggerTextChange() {
-      this.fire('ui-search-text-change', {value: this.$.input.value});
+      this.dispatchEvent(
+        new CustomEvent('ui-search-text-change', {
+          bubbles: true, 
+          composed: true,
+          detail : {
+            value: this.$.input.value
+          }
+        })
+      );
     }
     
     _setSearchText(e) {
