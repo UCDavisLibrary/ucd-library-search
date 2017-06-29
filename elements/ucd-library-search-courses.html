@@ -31,15 +31,15 @@
       
       <div class="layout">
         <div class="flex">
-          <input type="text" id="input" placeholder="Search Course Reserves" on-keyup="_onKeyUp" on-change="_onInputChange"/>
+          <input type="text" id="input" placeholder="Search Course Reserves" on-keyup="_onKeyUp" />
         </div>
         <div>
-          <a class="search-btn" id="btn">Search</a>
+          <button class="search-btn" id="btn" on-click="_search">Search</button>
         </div>
       </div>
       
       <div style="text-align: right; padding: 5px 0">
-        <a extra id="advanced">Advanced Search</a> | <a extra href="http://search.library.ucdavis.edu/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=01UCD_V1&tab=ucd_course_reserves&dscnt=0">Browse Search</a>
+        <a extra id="advanced" on-click="_advancedSearch">Advanced Search</a> | <a extra href="http://search.library.ucdavis.edu/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=01UCD_V1&tab=ucd_course_reserves&dscnt=0">Browse Search</a>
       </div>
     </div>
 
@@ -84,43 +84,29 @@
         }
       }
 
-      ready() {
-        super.ready();
-        this.setBtnHrefs();
-      }
-
-      _onKeyUp(e) {
-        if( e.which === 13 ) {
-          window.location = this.$.btn.href;
-          return;
-        }
-        this._tiggerTextChange();
-      }
-
-      _onInputChange() {
-        this._tiggerTextChange();
-      }
-
-      _onChange() {
+      _search() {
         var textkey = 'vl(freeText0)';
         this.parameters.normal[textkey] = this.$.input.value;
-        this.parameters.advanced[textkey] = this.$.input.value;
-        this.setBtnHrefs();
-      }
 
-      setBtnHrefs() {
         var normalHref = [];
-        var advancedHref = [];
 
         for( var key in this.parameters.normal ) {
           normalHref.push(encodeURIComponent(key)+'='+encodeURIComponent(this.parameters.normal[key]));
         }
 
+        window.location = this.rootUrl+'?'+normalHref.join('&');
+      }
+
+      _advancedSearch() {
+        var textkey = 'vl(freeText0)';
+        this.parameters.advanced[textkey] = this.$.input.value;
+        
+        var advancedHref = [];
+
         for( var key in this.parameters.advanced ) {
           advancedHref.push(encodeURIComponent(key)+'='+encodeURIComponent(this.parameters.advanced[key]));
         }
 
-        this.$.btn.href = this.rootUrl+'?'+normalHref.join('&');
         this.$.advanced.href = this.rootUrl+'?'+advancedHref.join('&');
       }
 

@@ -52,7 +52,7 @@
 
 
     <div layout$="[[largeScreen]]">
-      <ucd-library-search-nav selected="{{section}}" flat="[[flat]]"></ucd-library-search-nav>
+      <ucd-library-search-nav id="nav" selected="{{section}}" flat="[[flat]]"></ucd-library-search-nav>
 
       <div flex$="[[largeScreen]]" padded$="[[largeScreen]]">
         <iron-pages selected="{{section}}" attr-for-selected="id">
@@ -103,17 +103,31 @@
 
         if( postType === 'article' ) {
           this.section = 'guide';
-          this.$.guide.setValue(search);
+          this._setValues(search);
         } else if( postType === 'database' ) {
           this.section = 'databases';
-          this.$.databases.setValue(search);
+          this._setValues(search);
         } else if( this.getParameterByName('search-option') === '3' || postType ) {
           this.section = 'website';
-          this.$.website.setValue(search);
+          this._setValues(search);
           if( postType ) {
             this.$.website.setFilter(postType);
           }
         }
+
+        this.$.nav.init();
+      }
+
+      _setValues(text) {
+        this.dispatchEvent(
+          new CustomEvent('ui-search-text-change', {
+            bubbles: true, 
+            composed: true,
+            detail : {
+              value: text
+            }
+          })
+        );
       }
 
       getParameterByName(name, url) {

@@ -130,8 +130,7 @@
         }
       }
 
-      connectedCallback() {
-        super.connectedCallback();
+      init() {
         this._resetBtns();
 
         this.shadowRoot.querySelector('button[value="'+this.selected+'"]').classList.add('selected');

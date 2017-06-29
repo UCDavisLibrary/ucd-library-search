@@ -19,10 +19,10 @@
       
       <div class="layout">
         <div class="flex">
-          <input type="text" id="input" placeholder="Search Melvyl" on-keyup="_onKeyUp" on-change="_onInputChange" />
+          <input type="text" id="input" placeholder="Search Melvyl" on-keyup="_onKeyUp" />
         </div>
         <div>
-          <a class="search-btn" id="btn">Search</a>
+          <button class="search-btn" id="btn" on-click="_search">Search</button>
         </div>
       </div>
     </div>
@@ -52,19 +52,7 @@
         }
       }
 
-      _onKeyUp(e) {
-        if( e.which === 13 ) {
-          window.location = this.$.btn.href;
-          return;
-        }
-        this._tiggerTextChange();
-      }
-
-      _onInputChange() {
-        this._tiggerTextChange();
-      }
-
-      _onChange() {
+      _search() {
         this.parameters.s = this.$.input.value;
 
         var params = [];
@@ -72,7 +60,7 @@
           params.push(key+'='+encodeURIComponent(this.parameters[key]));
         }
 
-        this.$.btn.href = this.rootUrl+'?'+params.join('&');
+        window.location = this.rootUrl+'?'+params.join('&');
       }
 
     }

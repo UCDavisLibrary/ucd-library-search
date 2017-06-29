@@ -18,10 +18,10 @@
 
       <div class="layout">
         <div class="flex">
-          <input id="input" type="text" placeholder="Search Subject and Course Guides" on-keyup="_onKeyUp" on-change="_onInputChange" />
+          <input id="input" type="text" placeholder="Search Subject and Course Guides" on-keyup="_onKeyUp" />
         </div>
         <div>
-          <a class="search-btn" id="btn">Search</a>
+          <a class="search-btn" id="btn" on-click="_search">Search</a>
         </div>
       </div>
     </div>
@@ -51,25 +51,8 @@
         this.rootUrl = 'https://www.library.ucdavis.edu';
       }
 
-      _onKeyUp(e) {
-        if( e.which === 13 ) {
-          window.location = this.$.btn.href;
-          return;
-        }
-        this._tiggerTextChange();
-      }
-
-      _onInputChange() {
-        this._tiggerTextChange();
-      }
-
-      _onChange() {
-        this.$.btn.href = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl)+ '?post_type=article&s=' + this.$.input.value;
-      }
-
-      setValue(val) {
-        this.$.input.value = val;
-        this._tiggerTextChange();
+      _search() {
+        window.location = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl)+ '?post_type=article&s=' + this.$.input.value;
       }
     }
 

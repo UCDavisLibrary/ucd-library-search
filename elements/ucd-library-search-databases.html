@@ -37,10 +37,10 @@
 
       <div class="layout">
         <div class="flex">
-          <input id="input" type="text" placeholder="Search Databases" on-keyup="_onKeyUp" on-change="_onInputChange" />
+          <input id="input" type="text" placeholder="Search Databases" on-keyup="_onKeyUp" />
         </div>
         <div>
-          <a class="search-btn" id="btn">Search</a>
+          <button class="search-btn" id="btn" on-click="_search">Search</button>
         </div>
       </div>
     </div>
@@ -90,25 +90,8 @@
         this.$.az.innerHTML = html;
       }
 
-      _onKeyUp(e) {
-        if( e.which === 13 ) {
-          window.location = this.$.btn.href;
-          return;
-        }
-        this._tiggerTextChange();
-      }
-
-      _onInputChange() {
-        this._tiggerTextChange();
-      }
-
-      _onChange() {
-        this.$.btn.href = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl) + '?post_type=database&s=' + this.$.input.value;
-      }
-
-      setValue(val) {
-        this.$.input.value = val;
-        this._tiggerTextChange();
+      _search() {
+        window.location = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl) + '?post_type=database&s=' + this.$.input.value;
       }
     }
     window.customElements.define(UCDLibrarySearchDatabases.is, UCDLibrarySearchDatabases);
