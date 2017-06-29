@@ -19,47 +19,40 @@
       
       <div class="layout">
         <div class="flex">
-          <input type="text" id="input" placeholder="Search Melvyl" on-keyup="_onKeyUp" on-change="_onInputChange" />
+          <input type="text" id="input" placeholder="Search Melvyl" on-keyup="_onKeyUp" />
         </div>
         <div>
-          <a class="search-btn" id="btn">Search</a>
+          <button class="search-btn" id="btn" on-click="_search">Search</button>
         </div>
       </div>
     </div>
 
   </template>
   <script>
-    Polymer({
-      is: 'ucd-library-search-melvyl',
+    class UCDLibrarySearchMelvyl extends UCDLibrarySearchBase {
+      static get is() { 
+        return 'ucd-library-search-melvyl'; 
+      }
 
-      properties : {
-        flat : {
-          type : Boolean,
-          value : false
+      static get properties() {
+        return {
+          flat : {
+            type : Boolean,
+            value : false
+          }
         }
-      },
+      }
 
-      rootUrl : 'https://www.library.ucdavis.edu',
-      parameters : {
-        's' : '',
-        'search-option' : '2'
-      },
-
-      behaviors : [SearchTextSyncBehavior],
-
-      _onKeyUp : function(e) {
-        if( e.which === 13 ) {
-          window.location = this.$.btn.href;
-          return;
+      constructor() {
+        super();
+        this.rootUrl = 'https://www.library.ucdavis.edu';
+        this.parameters = {
+          's' : '',
+          'search-option' : '2'
         }
-        this._tiggerTextChange();
-      },
+      }
 
-      _onInputChange : function() {
-        this._tiggerTextChange();
-      },
-
-      _onChange : function() {
+      _search() {
         this.parameters.s = this.$.input.value;
 
         var params = [];
@@ -67,8 +60,10 @@
           params.push(key+'='+encodeURIComponent(this.parameters[key]));
         }
 
-        this.$.btn.href = this.rootUrl+'?'+params.join('&');
+        window.location = this.rootUrl+'?'+params.join('&');
       }
-    });
+
+    }
+    window.customElements.define(UCDLibrarySearchMelvyl.is, UCDLibrarySearchMelvyl);
   </script>
 </dom-module>

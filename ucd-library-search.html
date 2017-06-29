@@ -1,15 +1,10 @@
-<script src="search-text-sync.js"></script>
-<script>
-  window.Polymer = {
-    dom: 'shady'
-  };
-</script>
-
+<link rel="import" href="bower_components/polymer/polymer-element.html">
 <link rel="import" href="bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="bower_components/iron-media-query/iron-media-query.html">
 
 <link rel="import" href="elements/styles.html">
+<link rel="import" href="elements/ucd-library-search-base.html">
 <link rel="import" href="elements/ucd-library-search-nav.html">
 <link rel="import" href="elements/ucd-library-search-catalog.html">
 <link rel="import" href="elements/ucd-library-search-databases.html">
@@ -57,7 +52,7 @@
 
 
     <div layout$="[[largeScreen]]">
-      <ucd-library-search-nav selected="{{section}}" flat="[[flat]]"></ucd-library-search-nav>
+      <ucd-library-search-nav id="nav" selected="{{section}}" flat="[[flat]]"></ucd-library-search-nav>
 
       <div flex$="[[largeScreen]]" padded$="[[largeScreen]]">
         <iron-pages selected="{{section}}" attr-for-selected="id">
@@ -73,27 +68,32 @@
     
   </template>
   <script>
-    Polymer({
-      is: 'ucd-library-search',
+    class UCDLibrarySearch extends Polymer.Element {
+      static get is() { 
+        return 'ucd-library-search'; 
+      }
 
-      properties : {
-        section : {
-          type : String,
-          value : 'library'
-        },
-        flat : {
-          type : Boolean,
-          value : false,
-          reflectToAttribute: true
-        },
-        hostUrl : {
-          type : Boolean,
-          value : false,
-          reflectToAttribute: true
+      static get properties() {
+        return {
+          section : {
+            type : String,
+            value : 'library'
+          },
+          flat : {
+            type : Boolean,
+            value : false,
+            reflectToAttribute: true
+          },
+          hostUrl : {
+            type : Boolean,
+            value : false,
+            reflectToAttribute: true
+          }
         }
-      },
+      }
 
-      ready : function() {
+      ready() {
+        super.ready();
 
         /**
          * Check UCD library url parameters
@@ -103,21 +103,34 @@
 
         if( postType === 'article' ) {
           this.section = 'guide';
-          this.$.guide.setValue(search);
+          this._setValues(search);
         } else if( postType === 'database' ) {
           this.section = 'databases';
-          this.$.databases.setValue(search);
+          this._setValues(search);
         } else if( this.getParameterByName('search-option') === '3' || postType ) {
           this.section = 'website';
-          this.$.website.setValue(search);
+          this._setValues(search);
           if( postType ) {
             this.$.website.setFilter(postType);
           }
         }
 
-      },
+        this.$.nav.init();
+      }
 
-      getParameterByName : function(name, url) {
+      _setValues(text) {
+        this.dispatchEvent(
+          new CustomEvent('ui-search-text-change', {
+            bubbles: true, 
+            composed: true,
+            detail : {
+              value: text
+            }
+          })
+        );
+      }
+
+      getParameterByName(name, url) {
         if (!url) url = window.location.href;
         name = name.replace(/[\[\]]/g, "\\$&");
         var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
@@ -126,6 +139,8 @@
         if (!results[2]) return '';
         return decodeURIComponent(results[2].replace(/\+/g, " "));
       }
-    });
+    }
+
+    window.customElements.define(UCDLibrarySearch.is, UCDLibrarySearch);
   </script>
 </dom-module>

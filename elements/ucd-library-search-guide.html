@@ -22,10 +22,10 @@
 
       <div class="layout">
         <div class="flex">
-          <input id="input" type="text" placeholder="Search Subject and Course Guides" on-keyup="_onKeyUp" on-change="_onInputChange" />
+          <input id="input" type="text" placeholder="Search Subject and Course Guides" on-keyup="_onKeyUp" />
         </div>
         <div>
-          <a class="search-btn" id="btn">Search</a>
+          <a class="search-btn" id="btn" on-click="_search">Search</a>
         </div>
       </div>
       <div style="padding: 5px 0">
@@ -36,46 +36,34 @@
 
   </template>
   <script>
-    Polymer({
-      is: 'ucd-library-search-guide',
-      
-      
-      properties : {
-        flat : {
-          type : Boolean,
-          value : false
-        },
-        hostUrl : {
-          type : Boolean,
-          value : false
-        }
-      },
-
-      behaviors : [SearchTextSyncBehavior],
-
-      rootUrl : 'https://www.library.ucdavis.edu',
-
-
-      _onKeyUp : function(e) {
-        if( e.which === 13 ) {
-          window.location = this.$.btn.href;
-          return;
-        }
-        this._tiggerTextChange();
-      },
-
-      _onInputChange : function() {
-        this._tiggerTextChange();
-      },
-
-      _onChange : function() {
-        this.$.btn.href = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl)+ '?post_type=article&s=' + this.$.input.value;
-      },
-
-      setValue : function(val) {
-        this.$.input.value = val;
-        this._tiggerTextChange();
+    class UCDLibrarySearchGuide extends UCDLibrarySearchBase {
+      static get is() { 
+        return 'ucd-library-search-guide'; 
       }
-    });
+
+      static get properties() {
+        return {
+          flat : {
+            type : Boolean,
+            value : false
+          },
+          hostUrl : {
+            type : Boolean,
+            value : false
+          }
+        }
+      }
+
+      constructor() {
+        super();
+        this.rootUrl = 'https://www.library.ucdavis.edu';
+      }
+
+      _search() {
+        window.location = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl)+ '?post_type=article&s=' + this.$.input.value;
+      }
+    }
+
+    window.customElements.define(UCDLibrarySearchGuide.is, UCDLibrarySearchGuide);
   </script>
 </dom-module>

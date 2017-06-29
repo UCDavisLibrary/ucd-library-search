@@ -1,4 +1,3 @@
-
 <dom-module id="ucd-library-search-databases">
   <template>
     <style include="shared-styles"></style>
@@ -38,43 +37,48 @@
 
       <div class="layout">
         <div class="flex">
-          <input id="input" type="text" placeholder="Search Databases" on-keyup="_onKeyUp" on-change="_onInputChange" />
+          <input id="input" type="text" placeholder="Search Databases" on-keyup="_onKeyUp" />
         </div>
         <div>
-          <a class="search-btn" id="btn">Search</a>
+          <button class="search-btn" id="btn" on-click="_search">Search</button>
         </div>
       </div>
     </div>
-
 
     <div flat$="[[flat]]">
       <div style="padding: 4px 0">A-Z</div>
       <div id="az"></div>
     </div>
 
-    
-
   </template>
   <script>
-    Polymer({
-      is: 'ucd-library-search-databases',
+    class UCDLibrarySearchDatabases extends UCDLibrarySearchBase {
+      static get is() { 
+        return 'ucd-library-search-databases'; 
+      }
 
-      properties : {
-        flat : {
-          type : Boolean,
-          value : false
-        },
-        hostUrl : {
-          type : Boolean,
-          value : false
+      static get properties() {
+        return {
+          properties : {
+            flat : {
+              type : Boolean,
+              value : false
+            },
+            hostUrl : {
+              type : Boolean,
+              value : false
+            }
+          }
         }
-      },
+      }
 
-      behaviors : [SearchTextSyncBehavior],
+      constructor() {
+        super();
+        this.rootUrl = 'https://www.library.ucdavis.edu';
+      }
 
-      rootUrl : 'https://www.library.ucdavis.edu',
-
-      attached : function() {
+      connectedCallback() {
+        super.connectedCallback();
         var html = '';
         var i = 'a'.charCodeAt(0), j = 'z'.charCodeAt(0);
 
@@ -84,28 +88,12 @@
         }
 
         this.$.az.innerHTML = html;
-      },
-
-      _onKeyUp : function(e) {
-        if( e.which === 13 ) {
-          window.location = this.$.btn.href;
-          return;
-        }
-        this._tiggerTextChange();
-      },
-
-      _onInputChange : function() {
-        this._tiggerTextChange();
-      },
-
-      _onChange : function() {
-        this.$.btn.href = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl) + '?post_type=database&s=' + this.$.input.value;
-      },
-
-      setValue : function(val) {
-        this.$.input.value = val;
-        this._tiggerTextChange();
       }
-    });
+
+      _search() {
+        window.location = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl) + '?post_type=database&s=' + this.$.input.value;
+      }
+    }
+    window.customElements.define(UCDLibrarySearchDatabases.is, UCDLibrarySearchDatabases);
   </script>
 </dom-module>

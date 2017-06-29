@@ -1,0 +1,36 @@
+<script>
+  class UCDLibrarySearchBase extends Polymer.Element {
+    ready() {
+      super.ready();
+      window.addEventListener('ui-search-text-change', this._setSearchText.bind(this));
+    }
+    
+    _onKeyUp(e) {
+      if( e.which === 13 ) this._search();
+      else this._tiggerTextChange();
+    }
+
+    _tiggerTextChange() {
+      this.dispatchEvent(
+        new CustomEvent('ui-search-text-change', {
+          bubbles: true, 
+          composed: true,
+          detail : {
+            value: this.$.input.value,
+            nodeName : this.nodeName
+          }
+        })
+      );
+    }
+    
+    _setSearchText(e) {
+      if( e.detail.nodeName === this.nodeName ) return;
+      
+      this.$.input.value = e.detail.value;
+    }
+
+    setValue(val) {
+      this.$.input.value = val;
+    }
+  }
+</script>
