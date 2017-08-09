@@ -9,7 +9,7 @@
   "homepage": "",
   "private": true,
   "dependencies": {
-    "polymer": "^2.0.0",
+    "polymer": "Polymer/polymer#^2.0.2",
     "iron-pages": "PolymerElements/iron-pages#^2.0.0",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#^2.0.0",
     "iron-media-query": "PolymerElements/iron-media-query#^2.0.0",

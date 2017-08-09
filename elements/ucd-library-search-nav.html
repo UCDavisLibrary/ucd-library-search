@@ -17,15 +17,15 @@
         @apply(--layout-center-justified);
       }
 
-      button:focus {
+      div.btn-nav button:focus {
         border: solid 1px rgba(216, 183, 54, .8);
         outline:0;
       }
-      button.selected:focus {
+      div.btn-nav button.selected:focus {
         border: solid 1px rgba(216, 183, 54, .8);
         outline:0;
       }
-      button {
+      div.btn-nav button {
         border-radius: 0px;
         font-weight: 100;
         margin: 4px;
@@ -44,7 +44,7 @@
         text-shadow: 1px 1px 1px black;
       }
 
-      button.selected {
+      div.btn-nav button.selected {
         transform: scale(1.1);
         border: solid 1px rgba(9, 51, 119, .8);
         padding: 0px 5px;
@@ -54,18 +54,18 @@
         z-index: 20;
       }
 
-      [flat] button {
+      div[flat].btn-nav button {
         background: white;
         color: var(--default-primary-color);
         text-shadow: none;
       }
-      [flat] button.selected {
+      div[flat].btn-nav button.selected {
         background: rgba(9, 51, 119, .8);
         color: white;
       }
 
       @media(min-width: 700px) {
-        button {
+        div.btn-nav button {
           font-size: 12px;
           height: 65px;
           width: 95px;
@@ -73,7 +73,7 @@
       }
 
       @media(min-width: 900px) {
-        button {
+        div.btn-nav button {
           font-size: 16px;
           height: 75px;
           width: 120px;
@@ -99,7 +99,7 @@
       </select>
     </div>
 
-    <div layout$="[[!largeScreen]]" hidden$="[[smallScreen]]" flat$="[[flat]]">
+    <div class="btn-nav" layout$="[[!largeScreen]]" hidden$="[[smallScreen]]" flat$="[[flat]]">
       <div class="layout">
         <button on-click="_select" value="library"><div>Library Catalog + Articles</div></button>
         <button on-click="_select" value="courses"><div>Course Reserves</div></button>
