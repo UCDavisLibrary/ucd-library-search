@@ -39,7 +39,9 @@
       </div>
       
       <div style="text-align: right; padding: 5px 0">
-        <a extra id="advanced" on-click="_advancedSearch">Advanced Search</a> | <a extra href="https://search.library.ucdavis.edu/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=01UCD_V1&tab=ucd_course_reserves&dscnt=0">Browse Search</a>
+        <a extra id="advanced" on-click="_advancedSearch">Advanced Search</a>
+        <!-- | -->
+        <!-- <a extra href="https://search.library.ucdavis.edu/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=01UCD_V1&tab=ucd_course_reserves&dscnt=0">Browse Search</a> -->
       </div>
     </div>
 
@@ -59,55 +61,24 @@
         }
       }
 
-      constructor() {
-        super();
-        this.rootUrl = 'https://search.library.ucdavis.edu/primo_library/libweb/action/search.do';
-
-        this.parameters = {
-          normal : {
-            mode : 'Basic',
-            vid : '01UCD_V1',
-            'vl(freeText0)' : '',
-            fn : 'search',
-            tab : 'ucd_course_reserves'
-          },
-          advanced : {
-            mode : 'Advanced',
-            ct : 'AdvancedSearch',
-            vid : '01UCD_V1', 
-            tab : 'ucd_course_reserves',
-            fn : 'search',
-            indx : 1,
-            dscnt : 0,
-            'vl(freeText0)' : ''
-          }
-        }
-      }
-
       _search() {
-        var textkey = 'vl(freeText0)';
-        this.parameters.normal[textkey] = this.$.input.value;
-
-        var normalHref = [];
-
-        for( var key in this.parameters.normal ) {
-          normalHref.push(encodeURIComponent(key)+'='+encodeURIComponent(this.parameters.normal[key]));
+        var params = {
+          query : this.$.input.value,
+          mode : primoUtils.MODES.BASIC,
+          tab : primoUtils.TABS.RESERVES
         }
 
-        window.location = this.rootUrl+'?'+normalHref.join('&');
+        window.location = primoUtils.createPrimoLink(params);
       }
 
       _advancedSearch() {
-        var textkey = 'vl(freeText0)';
-        this.parameters.advanced[textkey] = this.$.input.value;
-        
-        var advancedHref = [];
-
-        for( var key in this.parameters.advanced ) {
-          advancedHref.push(encodeURIComponent(key)+'='+encodeURIComponent(this.parameters.advanced[key]));
+        var params = {
+          query : this.$.input.value,
+          mode : primoUtils.MODES.ADVANCED,
+          tab : primoUtils.TABS.RESERVES
         }
 
-        this.$.advanced.href = this.rootUrl+'?'+advancedHref.join('&');
+        window.location = primoUtils.createPrimoLink(params);
       }
 
     }

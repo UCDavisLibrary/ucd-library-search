@@ -4,6 +4,7 @@
 <link rel="import" href="bower_components/iron-media-query/iron-media-query.html">
 
 <link rel="import" href="elements/styles.html">
+<script src="js/primo-utils.js"></script>
 <link rel="import" href="elements/ucd-library-search-base.html">
 <link rel="import" href="elements/ucd-library-search-nav.html">
 <link rel="import" href="elements/ucd-library-search-catalog.html">
@@ -100,6 +101,7 @@
          */
         var postType = this.getParameterByName('post_type');
         var search = this.getParameterByName('s');
+        var nav = this.getParameterByName('search_nav');
 
         if( postType === 'article' ) {
           this.section = 'guide';
@@ -113,6 +115,8 @@
           if( postType ) {
             this.$.website.setFilter(postType);
           }
+        } else if( nav ) {
+          this.section = nav;
         }
 
         this.$.nav.init();
