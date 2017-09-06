@@ -2,7 +2,14 @@
   <style>
     :root {
       --default-primary-color: #002655;
-      --default-secondary-color: #0048a2;
+      --default-secondary-color: #335379;
+      --default-primary-yellow: #dAAA00;
+      --default-secondary-yellow: #E9CC66;
+
+      --default-font-size : 17px;
+      --default-font-weight: 400;
+      --heavy-font-weight: 700;
+      --extra-heavy-font-weight: 900;
     }
   </style>
 </custom-style>
@@ -13,12 +20,17 @@
       a {
         cursor: pointer;
         text-decoration: underline;
+        font-size: var(--default-font-size);
       }
       .layout {
         @apply(--layout-horizontal);
       }
       .flex {
         @apply(--layout-flex);
+      }
+      
+      .text {
+        font-size: var(--default-font-size);
       }
 
       .search-btn {
@@ -40,19 +52,18 @@
       }
 
       h1, h2 {
+        color: var(--default-primary-color);
         margin-top: 0;
         margin-bottom: 5px;
-        font-weight: 100;
+        font-weight: var(--default-font-weight);
       }
 
-      .text {
-        color: white;
-        text-shadow: 1px 1px 1px black;
+      h1 {
+        font-size: 40px;
       }
 
-      .text[flat] {
+      .blue {
         color: var(--default-primary-color);
-        text-shadow: none;
       }
 
       select, input[type="text"] {
@@ -84,13 +95,8 @@
       }
 
       .help {
-        font-size: 12px;
-        color: #f8f8f8;
+        font-size: var(--default-font-size);
         padding-bottom: 15px;
-      }
-
-      [flat] .help {
-        color: #333;
       }
 
       @media(max-width: 700px) {

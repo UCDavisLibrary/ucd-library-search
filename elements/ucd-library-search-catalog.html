@@ -54,14 +54,14 @@
       <div layout$="[[largeScreen]]">
         <div class="layout center" style="padding-top: 5px">
           <div>
-            <input type="checkbox" id="noextra" on-change="setBtnHrefs"/>
+            <input type="checkbox" style="vertical-align: sub" id="noextra" on-change="setBtnHrefs"/>
           </div>
-          <label for="noextra" class="flex" style="white-space: nowrap; margin: 5px">
+          <label for="noextra" class="flex blue text" style="white-space: nowrap; margin: 5px">
             Library Catalog only
           </label>
         </div>
 
-        <div style="text-align: right; padding: 5px 0" class="flex">
+        <div style="text-align: right; padding: 5px 0; margin: 5px 0" class="flex">
           <a extra id="advanced" on-click="_advancedSearch">Advanced Search</a> | <a extra href$="[[browseLink]]">Browse Search</a>
         </div>
       </div>

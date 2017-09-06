@@ -17,51 +17,43 @@
         @apply(--layout-center-justified);
       }
 
-      div.btn-nav button:focus {
-        border: solid 1px rgba(216, 183, 54, .8);
-        outline:0;
-      }
-      div.btn-nav button.selected:focus {
-        border: solid 1px rgba(216, 183, 54, .8);
-        outline:0;
-      }
       div.btn-nav button {
         border-radius: 0px;
         font-weight: 100;
-        margin: 4px;
+        margin: 5px;
         font-size: 12px;
         cursor: pointer;
-        color: #fff;
+        color: var(--default-primary-color);
         display: block;
         float: left;
         height: 65px;
         width: 80px;
-        border: solid 1px #d6dce6;
-        background: rgba(255, 255, 255, .3);
+        border: solid 1px var(--default-primary-yellow);
+        background: var(--default-secondary-yellow);
         padding: 0px 5px;
         transition: background 400ms ease-out, transform 400ms ease-out;
         transform: scale(1);
-        text-shadow: 1px 1px 1px black;
+      }
+
+      div.btn-nav button.selected:focus {
+        border: solid 2px var(--default-primary-color);
+        padding: 4px;
+        outline:0;
+      }
+      div.btn-nav button:focus {
+        border: solid 2px var(--default-primary-color);
+        padding: 4px;
+        outline:0;
       }
 
       div.btn-nav button.selected {
-        transform: scale(1.1);
-        border: solid 1px rgba(9, 51, 119, .8);
+        transform: scale(1.05);
+        border: solid 1px var(--default-primary-color);
         padding: 0px 5px;
-        background: rgba(9, 51, 119, .8);
+        background: var(--default-secondary-color);
         color: white;
         text-shadow: none;
         z-index: 20;
-      }
-
-      div[flat].btn-nav button {
-        background: white;
-        color: var(--default-primary-color);
-        text-shadow: none;
-      }
-      div[flat].btn-nav button.selected {
-        background: rgba(9, 51, 119, .8);
-        color: white;
       }
 
       @media(min-width: 700px) {
@@ -74,8 +66,8 @@
 
       @media(min-width: 900px) {
         div.btn-nav button {
-          font-size: 16px;
-          height: 75px;
+          font-size: var(--default-font-size);
+          height: 90px;
           width: 120px;
         }
       }
@@ -94,7 +86,7 @@
         <option value="courses">Course Reserves</option>
         <option value="databases">Databases</option>
         <option value="melvyl">Melvyl</option>
-        <option value="guide">Subject and Course Guides</option>
+        <option value="guide">Subject + Course Guides</option>
         <option value="website">Site Search</option>
       </select>
     </div>
@@ -107,7 +99,7 @@
       </div>
       <div class="layout center">
         <button on-click="_select" value="melvyl"><div>All UC Libraries (Melvyl)</div></button>
-        <button on-click="_select" value="guide"><div>Subject and Course Guides</div></button>
+        <button on-click="_select" value="guide"><div>Subject + Course Guides</div></button>
         <button on-click="_select" value="website"><div>Site Search</div></button>
       </div>
     </div>
