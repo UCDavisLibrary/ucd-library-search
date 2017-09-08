@@ -9,15 +9,19 @@
         -ms-animation:bounceIn 400ms ease-out;
         animation:bounceIn 400ms ease-out;
       }
-
+      .browser-text {
+        margin: 15px 0 0 5px;
+        color: var(--default-primary-gray);
+        text-transform: uppercase;
+        font-weight: var(--default-font-weight);
+      }
       #az a {
         text-shadow: none;
         color: white;
         text-decoration: none;
         padding: 0;
-        background: rgba(255, 255, 255, .3);
         padding: 5px;
-        text-transform: capitalize;
+        text-transform: uppercase;
         display: inline-block;
         transition: all 200ms linear;
       }
@@ -27,12 +31,11 @@
       }
       [flat] #az a {
         color: var(--default-primary-color);
-        background: white;
       }
     </style>
 
     <div class="text" flat$="[[flat]]">
-      <h1>Databases</h1>
+      <h1 class="title">Databases</h1>
       <div class="help">Find collections of scholarly journal articles, digitized primary sources, streaming media, and more.</div>
 
       <div class="layout">
@@ -46,7 +49,7 @@
     </div>
 
     <div flat$="[[flat]]">
-      <div style="padding: 4px 0">A-Z</div>
+      <div class="browser-text">Or browse Alphabetically:</div>
       <div id="az"></div>
     </div>
 
@@ -64,34 +67,31 @@
               type : Boolean,
               value : false
             },
-            hostUrl : {
-              type : Boolean,
-              value : false
+            rootUrl : {
+              type : String,
+              value : ''
             }
           }
         }
       }
 
-      constructor() {
-        super();
-        this.rootUrl = 'https://www.library.ucdavis.edu';
-      }
-
-      connectedCallback() {
-        super.connectedCallback();
+      ready() {
+        super.ready();
         var html = '';
         var i = 'a'.charCodeAt(0), j = 'z'.charCodeAt(0);
 
-        var url = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl);
         for (; i <= j; ++i) {
-            html += '<a class="style-scope ucd-library-search-databases" href="'+url+'/az-database/'+String.fromCharCode(i)+'">'+String.fromCharCode(i)+'</a>';
+            html += '<a class="style-scope ucd-library-search-databases" href="' + 
+                    (this.rootUrl || '') + '/az-database/' + 
+                    String.fromCharCode(i) + '">' + 
+                    String.fromCharCode(i) + '</a>';
         }
 
         this.$.az.innerHTML = html;
       }
 
       _search() {
-        window.location = (this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl) + '?post_type=database&s=' + this.$.input.value;
+        window.location = (this.rootUrl || '') + '/?post_type=database&s=' + this.$.input.value;
       }
     }
     window.customElements.define(UCDLibrarySearchDatabases.is, UCDLibrarySearchDatabases);

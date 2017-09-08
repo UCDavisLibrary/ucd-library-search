@@ -19,7 +19,7 @@
 
       div.btn-nav button {
         border-radius: 0px;
-        font-weight: 100;
+        font-weight: var(--default-font-weight);
         margin: 5px;
         font-size: 12px;
         cursor: pointer;
@@ -58,7 +58,7 @@
 
       @media(min-width: 700px) {
         div.btn-nav button {
-          font-size: 12px;
+          font-size: var(--default-font-size);
           height: 65px;
           width: 95px;
         }
@@ -81,7 +81,7 @@
     <iron-media-query query="max-width: 600px" query-matches="{{smallScreen}}"></iron-media-query>
 
     <div hidden$="[[!smallScreen]]">
-      <select id="selector" on-change="_select" style="display:block; margin-bottom: 40px">
+      <select id="selector" on-change="_select" style="display:block; margin-bottom: 20px">
         <option value="library">Library Catalog + Articles</option>
         <option value="courses">Course Reserves</option>
         <option value="databases">Databases</option>

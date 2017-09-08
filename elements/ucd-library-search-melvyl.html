@@ -14,7 +14,7 @@
     </style>
 
     <div class="text" flat$="[[flat]]">
-      <h1>All UC Libraries (Melvyl)</h1>
+      <h1 class="title">All UC Libraries (Melvyl)</h1>
       <div class="help">Find books, journals, media, and other materials held in UC libraries and other libraries worldwide.</div>
       
       <div class="layout">
@@ -39,13 +39,16 @@
           flat : {
             type : Boolean,
             value : false
+          },
+          rootUrl : {
+            type : String,
+            value : ''
           }
         }
       }
 
       constructor() {
         super();
-        this.rootUrl = 'https://www.library.ucdavis.edu';
         this.parameters = {
           's' : '',
           'search-option' : '2'
@@ -60,7 +63,7 @@
           params.push(key+'='+encodeURIComponent(this.parameters[key]));
         }
 
-        window.location = this.rootUrl+'?'+params.join('&');
+        window.location = (this.rootUrl || '') + '?' + params.join('&');
       }
 
     }

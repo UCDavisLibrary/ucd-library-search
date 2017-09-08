@@ -16,6 +16,7 @@
         font-weight: normal;
         color: white;
         text-shadow: none;
+        white-space: nowrap;
       }
       [flat] a[extra] {
         color: var(--default-primary-color);
@@ -36,9 +37,10 @@
     </style>
 
     <iron-media-query query="min-width: 950px" query-matches="{{largeScreen}}"></iron-media-query>
+    <iron-media-query query="max-width: 500px" query-matches="{{smallScreen}}"></iron-media-query>
 
     <div class="text" flat$="[[flat]]">
-      <h1>Search Library Catalog + Articles</h1>
+      <h1 class="title">Search Library Catalog + Articles</h1>
       <div class="help">
         Find books, ebooks, journals, movies and music, government documents, and more.
       </div>
@@ -62,7 +64,9 @@
         </div>
 
         <div style="text-align: right; padding: 5px 0; margin: 5px 0" class="flex">
-          <a extra id="advanced" on-click="_advancedSearch">Advanced Search</a> | <a extra href$="[[browseLink]]">Browse Search</a>
+          <a extra id="advanced" on-click="_advancedSearch">Advanced Search</a>
+          <span hidden$="[[smallScreen]]"> | </span>
+          <a extra href$="[[browseLink]]">Browse Search</a>
         </div>
       </div>
     </div>

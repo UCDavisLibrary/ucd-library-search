@@ -12,7 +12,7 @@
     </style>
 
     <div class="text" flat$="[[flat]]">
-      <h1>Site Search</h1>
+      <h1 class="title">Site Search</h1>
       <div class="help">Find research guides, manuscripts and archives, services and people.</div>
 
       <div class="layout">
@@ -46,16 +46,15 @@
             type : Boolean,
             value : false
           },
-          hostUrl : {
-            type : Boolean,
-            value : false
+          rootUrl : {
+            type : String,
+            value : ''
           }
         }
       }
 
       constructor() {
         super();
-        this.rootUrl = 'https://www.library.ucdavis.edu';
         this.parameters = {
           's' : '',
           'search-option' : '3'
@@ -70,9 +69,7 @@
           params.push(key+'='+encodeURIComponent(this.parameters[key]));
         }
 
-        var root = this.hostUrl ? window.location.protocol+'//'+window.location.host : this.rootUrl;
-
-        window.location = root+'?'+params.join('&');
+        window.location = (this.rootUrl || '') + '/?' + params.join('&');
       }
 
       setFilter (value) {
