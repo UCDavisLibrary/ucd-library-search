@@ -54,7 +54,7 @@
       </div>
 
       <div layout$="[[largeScreen]]">
-        <div class="layout center" style="padding-top: 5px">
+        <div class="layout center" style="padding-top: 5px; flex: 1">
           <div>
             <input type="checkbox" style="vertical-align: sub" id="noextra" on-change="setBtnHrefs"/>
           </div>
@@ -63,10 +63,10 @@
           </label>
         </div>
 
-        <div style="text-align: right; padding: 5px 0; margin: 5px 0" class="flex">
-          <a extra id="advanced" on-click="_advancedSearch">Advanced Search</a>
-          <span hidden$="[[smallScreen]]"> | </span>
-          <a extra href$="[[browseLink]]">Browse Search</a>
+        <div style="text-align: right; padding: 5px 0; margin: 5px 0" layout$="[[largeScreen]]">
+          <div><a extra id="advanced" on-click="_advancedSearch">Advanced Search</a></div>
+          <span hidden$="[[!largeScreen]]">&nbsp;|&nbsp;</span>
+          <div><a extra href$="[[browseLink]]">Browse Search</a></div>
         </div>
       </div>
     </div>
