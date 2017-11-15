@@ -68,7 +68,7 @@
         <div style="text-align: right; padding: 5px 0; margin: 5px 0" layout$="[[xlargeScreen]]">
           <div><a extra id="advanced" on-click="_advancedSearch">Advanced Search</a></div>
           <span hidden$="[[!xlargeScreen]]">&nbsp;|&nbsp;</span>
-          <div><a extra href$="[[browseLink]]">Browse Search</a></div>
+          <div><a extra href$="[[browseLink]]" on-click="_onBrowse">Browse Search</a></div>
         </div>
       </div>
     </div>
@@ -111,7 +111,9 @@
           tab : this.$.noextra.checked ? primoUtils.TABS.CATALOG : primoUtils.TABS.DEFAULT
         }
 
-        window.location = primoUtils.createPrimoLink(params);
+        var link = primoUtils.createPrimoLink(params);
+        this.sendGAEvent({eventAction: 'primo-basic-'+params.tab, eventLabel: this.$.input.value});
+        window.location = link;
       }
 
       _advancedSearch() {
@@ -121,7 +123,14 @@
           tab : this.$.noextra.checked ? primoUtils.TABS.CATALOG : primoUtils.TABS.DEFAULT
         }
 
-        window.location = primoUtils.createPrimoLink(params);
+        var link = primoUtils.createPrimoLink(params);
+        this.sendGAEvent({eventAction: 'primo-advanced-'+params.tab, eventLabel: this.$.input.value});
+
+        window.location = link;
+      }
+
+      _onBrowse() {
+        this.sendGAEvent({eventAction: 'primo-browse', eventLabel: primoUtils.browsePath});
       }
 
     }

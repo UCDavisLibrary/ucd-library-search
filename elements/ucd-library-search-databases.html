@@ -81,16 +81,21 @@
         var i = 'a'.charCodeAt(0), j = 'z'.charCodeAt(0);
 
         for (; i <= j; ++i) {
-            html += '<a class="style-scope ucd-library-search-databases" href="' + 
+            html += '<a class="style-scope ucd-library-search-databases" onclick="_azDatabaseBrowse(this)" href="' + 
                     (this.rootUrl || '') + '/az-database/' + 
                     String.fromCharCode(i) + '">' + 
                     String.fromCharCode(i) + '</a>';
         }
 
         this.$.az.innerHTML = html;
+
+        window._azDatabaseBrowse = function(e) {
+          this.sendGAEvent({eventAction: 'database-browse', eventLabel: e.innerHTML});
+        }.bind(this);
       }
 
       _search() {
+        this.sendGAEvent({eventAction: 'database-search', eventLabel: this.$.input.value});
         window.location = (this.rootUrl || '') + '/?post_type=database&s=' + this.$.input.value;
       }
     }

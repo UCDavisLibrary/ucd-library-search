@@ -69,10 +69,11 @@
           params.push(key+'='+encodeURIComponent(this.parameters[key]));
         }
 
+        this.sendGAEvent({eventAction: 'website-search', eventLabel: this.$.input.value});
         window.location = (this.rootUrl || '') + '/?' + params.join('&');
       }
 
-      setFilter (value) {
+      setFilter(value) {
         this.showFilter = true;
         this.filterValue = value;
       }

@@ -29,6 +29,21 @@
       this.$.input.value = e.detail.value;
     }
 
+    /**
+     * @method sendGAEvent
+     *
+     * @param {Object} event event object
+     * @param {String} event.eventAction type of search
+     * @param {String} event.eventLabel search text
+     */
+    sendGAEvent(event) {
+      if( !window.ga ) return;
+      event.hitType = 'event';
+      event.eventCategory = 'search-widget';
+      event.eventValue = 1;
+      ga('send', event);
+    }
+
     setValue(val) {
       this.$.input.value = val;
     }

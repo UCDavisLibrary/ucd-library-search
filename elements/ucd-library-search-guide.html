@@ -29,8 +29,8 @@
         </div>
       </div>
       <div style="padding: 5px 0">
-        <a href="/course-guides">All Course Guides</a> | 
-        <a href="/browse-subjects">All Subject Guides</a>
+        <a href="/course-guides" type="course" on-click="_onBrowse">All Course Guides</a> | 
+        <a href="/browse-subjects" type="subject" on-click="_onBrowse">All Subject Guides</a>
       </div>
     </div>
 
@@ -54,7 +54,12 @@
         }
       }
 
+      _onBrowse(e) {
+        this.sendGAEvent({eventAction: 'guide-browse', eventLabel: e.currentTarget.getAttribute('type')});
+      }
+
       _search() {
+        this.sendGAEvent({eventAction: 'guide-search', eventLabel: this.$.input.value});
         window.location = (this.rootUrl || '') + '/?post_type=article&s=' + this.$.input.value;
       }
     }

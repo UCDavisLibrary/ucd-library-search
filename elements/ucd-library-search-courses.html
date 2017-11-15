@@ -68,7 +68,9 @@
           tab : primoUtils.TABS.RESERVES
         }
 
-        window.location = primoUtils.createPrimoLink(params);
+        var link = primoUtils.createPrimoLink(params);
+        this.sendGAEvent({eventAction: 'primo-basic-'+params.tab, eventLabel: this.$.input.value});
+        window.location = link;
       }
 
       _advancedSearch() {
@@ -78,7 +80,9 @@
           tab : primoUtils.TABS.RESERVES
         }
 
-        window.location = primoUtils.createPrimoLink(params);
+        var link = primoUtils.createPrimoLink(params);
+        this.sendGAEvent({eventAction: 'primo-advanced-'+params.tab, eventLabel: this.$.input.value});
+        window.location = link;
       }
 
     }

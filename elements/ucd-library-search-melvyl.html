@@ -63,6 +63,7 @@
           params.push(key+'='+encodeURIComponent(this.parameters[key]));
         }
 
+        this.sendGAEvent({eventAction: 'melvyl-search', eventLabel: this.$.input.value});
         window.location = (this.rootUrl || '') + '?' + params.join('&');
       }
 
