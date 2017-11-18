@@ -27,12 +27,30 @@
         text-decoration: underline;
       }
       [layout] {
-        @apply(--layout-horizontal);
+        display: flex;
       }
 
       /*hack for website layout */
       input[type="checkbox"] {
         width: auto
+      }
+
+      @media(max-width: 1150px) {
+        .weight-one {
+          display: block;
+        }
+        .weight-one.break {
+          display: none;
+        }
+      }
+
+      @media(max-width: 1050px) {
+        .weight-two {
+          display: block;
+        }
+        .weight-two.break {
+          display: none;
+        }
       }
 
     </style>
@@ -65,10 +83,12 @@
           </label>
         </div>
 
-        <div style="text-align: right; padding: 5px 0; margin: 5px 0" layout$="[[xlargeScreen]]">
-          <div><a extra id="advanced" on-click="_advancedSearch">Advanced Search</a></div>
-          <span hidden$="[[!xlargeScreen]]">&nbsp;|&nbsp;</span>
-          <div><a extra href$="[[browseLink]]" on-click="_onBrowse">Browse Search</a></div>
+        <div style="text-align: right; padding: 5px 0; margin: 5px 0">
+          <a extra id="advanced" on-click="_advancedSearch" class="weight-two">Advanced Search</a>
+          <span class="weight-two break">&nbsp;|&nbsp;</span>
+          <a extra href$="[[browseLink]]" on-click="_onBrowse" class="weight-two">Browse Search</a>
+          <span class="weight-one break">&nbsp;|&nbsp;</span>
+          <a extra href="/library-search-faq" class="weight-one">Search Tips</a>
         </div>
       </div>
     </div>
