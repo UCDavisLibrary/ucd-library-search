@@ -9,27 +9,46 @@
         -ms-animation:bounceIn 400ms ease-out;
         animation:bounceIn 400ms ease-out;
       }
-      .browser-text {
-        margin: 15px 0 0 5px;
-        color: var(--default-primary-gray);
-        text-transform: uppercase;
+
+      .popular {
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .popular > * {
+        margin: 0 5px 0 0;
+      }
+
+      .bottom {
+        margin: 15px 0 0 0;
+        display: flex;
+        align-items: flex-start;
+        white-space: nowrap;
         font-weight: var(--default-font-weight);
       }
-      #az a {
-        text-shadow: none;
-        color: white;
-        text-decoration: none;
-        padding: 0;
-        padding: 5px;
-        text-transform: uppercase;
-        display: inline-block;
-        transition: all 200ms linear;
+
+      .break {
+        margin: 0 10px;
       }
-      #az a:hover {
-        color: var(--default-secondary-color);
-        background: white;
+
+      @media( max-width: 600px ) {
+        .bottom {
+          display: block;
+        }
+        .bottom :first-child {
+          margin-left: 0;
+        }
+        .break {
+          display: none;
+        }
+        .popular {
+          margin-top: 10px;
+          margin-left: 0;
+        }
       }
-      [flat] #az a {
+
+      [flat] a {
         color: var(--default-primary-color);
       }
     </style>
@@ -48,9 +67,18 @@
       </div>
     </div>
 
-    <div flat$="[[flat]]">
-      <div class="browser-text">Or browse Alphabetically:</div>
-      <div id="az"></div>
+    <div flat$="[[flat]]" class="bottom">
+      <div><a href="/database/">Browse A-Z</a></div>
+      <div class="break">|</div>
+
+      <div class="popular">
+        <div>Popular:</div>
+        <div><a href="http://uclibs.org/PID/10354">PubMed</a>,</div>
+        <div><a href="/?post_type=database&s=proquest">ProQuest</a>,</div>
+        <div><a href="/?post_type=database&s=web+of+science">Web of Science</a>,</div>
+        <div><a href="http://search.proquest.com/psycinfo/advanced">PsycINFO</a>,</div>
+        <div><a href="http://webofscience.com/biosis">BIOSIS</a></div>
+      </div>
     </div>
 
   </template>
@@ -73,25 +101,6 @@
             }
           }
         }
-      }
-
-      ready() {
-        super.ready();
-        var html = '';
-        var i = 'a'.charCodeAt(0), j = 'z'.charCodeAt(0);
-
-        for (; i <= j; ++i) {
-            html += '<a class="style-scope ucd-library-search-databases" onclick="_azDatabaseBrowse(this)" href="' + 
-                    (this.rootUrl || '') + '/az-database/' + 
-                    String.fromCharCode(i) + '">' + 
-                    String.fromCharCode(i) + '</a>';
-        }
-
-        this.$.az.innerHTML = html;
-
-        window._azDatabaseBrowse = function(e) {
-          this.sendGAEvent({eventAction: 'database-browse', eventLabel: e.innerHTML});
-        }.bind(this);
       }
 
       _search() {
