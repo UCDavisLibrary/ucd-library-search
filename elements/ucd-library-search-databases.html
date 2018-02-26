@@ -20,6 +20,10 @@
         margin: 0 5px 0 0;
       }
 
+      .popular div span[last-child] {
+        display: none;
+      }
+
       .bottom {
         margin: 15px 0 0 0;
         display: flex;
@@ -73,16 +77,39 @@
 
       <div class="popular">
         <div>Popular:</div>
-        <div><a href="http://uclibs.org/PID/10354">PubMed</a>,</div>
-        <div><a href="/?post_type=database&s=proquest">ProQuest</a>,</div>
-        <div><a href="/?post_type=database&s=web+of+science">Web of Science</a>,</div>
-        <div><a href="http://search.proquest.com/psycinfo/advanced">PsycINFO</a>,</div>
-        <div><a href="http://webofscience.com/biosis">BIOSIS</a></div>
+        <template is="dom-repeat" items="[[databases]]">
+            <div>
+              <a href$="[[item.url]]">[[item.label]]</a><span last-child$="[[item.last]]">,</span>
+            </div>
+        </template>
       </div>
     </div>
 
   </template>
   <script>
+    const DEFAULT_DATABASES = [
+      {
+        label : 'PubMed',
+        url : 'http://uclibs.org/PID/10354'
+      },
+      {
+        label : 'JSTOR',
+        url : 'http://www.jstor.org/'
+      },
+      {
+        label : 'Web of Science',
+        url : 'http://isiknowledge.com/wos'
+      },
+      {
+        label : 'PsycINFO',
+        url : 'http://search.proquest.com/psycinfo/advanced'
+      },
+      {
+        label : 'BIOSIS',
+        url : 'http://webofscience.com/biosis'
+      }
+    ]
+
     class UCDLibrarySearchDatabases extends UCDLibrarySearchBase {
       static get is() { 
         return 'ucd-library-search-databases'; 
@@ -98,9 +125,36 @@
             rootUrl : {
               type : String,
               value : ''
+            },
+            popularDatabases : {
+              type : Array,
+              value : () => [],
+              observer : '_onPopularDatabaseUpdate'
             }
           }
         }
+      }
+      
+      constructor() {
+        super();
+        this._onPopularDatabaseUpdate();
+      }
+
+
+      _onPopularDatabaseUpdate() {
+        var dbs;
+        if( !this.popularDatabases ) {
+          dbs = DEFAULT_DATABASES;
+        } else if( !this.popularDatabases.length ) {
+          dbs = DEFAULT_DATABASES;
+        } else {
+          dbs = this.popularDatabases;
+        }
+
+        // deep clone
+        dbs = dbs.map(db => Object.assign({}, db));
+        dbs[dbs.length-1].last = true;
+        this.databases = dbs;
       }
 
       _search() {
