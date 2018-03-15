@@ -86,9 +86,9 @@
         <div style="text-align: right; padding: 5px 0; margin: 5px 0">
           <a extra id="advanced" on-click="_advancedSearch" class="weight-two">Advanced Search</a>
           <span class="weight-two break">&nbsp;|&nbsp;</span>
-          <a extra href$="[[browseLink]]" on-click="_onBrowse" class="weight-two">Browse Search</a>
+          <a extra href$="[[browseLink]]" on-click="_onBrowse" class="weight-two" on-click="setOutboundEvent">Browse Search</a>
           <span class="weight-one break">&nbsp;|&nbsp;</span>
-          <a extra href="/library-search-faq" class="weight-one">Search Tips</a>
+          <a extra href="/library-search-faq" class="weight-one" on-click="setOutboundEvent">Search Tips</a>
         </div>
       </div>
     </div>
@@ -145,7 +145,7 @@
 
         var link = primoUtils.createPrimoLink(params);
         this.sendGAEvent({eventAction: 'primo-advanced-'+params.tab, eventLabel: this.$.input.value});
-
+        this.setOutboundEvent(link);
         window.location = link;
       }
 

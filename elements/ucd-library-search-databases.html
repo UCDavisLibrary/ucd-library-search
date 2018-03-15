@@ -79,7 +79,7 @@
         <div>Popular:</div>
         <template is="dom-repeat" items="[[databases]]">
             <div>
-              <a href$="[[item.url]]">[[item.label]]</a><span last-child$="[[item.last]]">,</span>
+              <a href$="[[item.url]]" on-click="setOutboundEvent">[[item.label]]</a><span last-child$="[[item.last]]">,</span>
             </div>
         </template>
       </div>

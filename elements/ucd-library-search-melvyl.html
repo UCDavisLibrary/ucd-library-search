@@ -64,6 +64,7 @@
         }
 
         this.sendGAEvent({eventAction: 'melvyl-search', eventLabel: this.$.input.value});
+        this.setOutboundEvent((this.rootUrl || '') + '?' + params.join('&'));
         window.location = (this.rootUrl || '') + '?' + params.join('&');
       }
 
