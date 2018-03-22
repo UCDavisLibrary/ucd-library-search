@@ -1,37 +1,22 @@
-<custom-style>
-  <style>
-    :root {
-      --default-primary-color: #002655;
-      --default-secondary-color: #335379;
-      --default-primary-yellow: #dAAA00;
-      --default-secondary-yellow: #E9CC66;
-      --default-primary-gray: #808080;
-
-      --default-font-size : 17px;
-      --default-font-weight: 400;
-      --heavy-font-weight: 700;
-      --extra-heavy-font-weight: 900;
-    }
-  </style>
-</custom-style>
-
 <dom-module id="shared-styles">
   <template>
     <style>
-      a {
-        cursor: pointer;
-        text-decoration: underline;
-        font-size: var(--default-font-size);
+      ucd-library-search .layout, ucd-library-search [layout] {
+        display: flex;
       }
-      .layout {
-        @apply(--layout-horizontal);
+
+      ucd-library-search .flex, ucd-library-search [flex] {
+        flex: 1;
       }
-      .flex {
-        @apply(--layout-flex);
+
+      ucd-library-search .center, ucd-library-search [center] {
+        align-items: center;
+        justify-content: center;
       }
-      
-      .text {
-        font-size: var(--default-font-size);
+
+
+      [hidden] {
+        display: none !important;
       }
 
       .search-btn {
@@ -49,11 +34,12 @@
         cursor: pointer;
         border-radius: 0;
       }
+
       .search-btn:hover {
         background: var(--default-secondary-color);
       }
 
-      h1, h2 {
+      /* h1, h2 {
         color: var(--default-primary-color);
         margin-top: 0;
         margin-bottom: 5px;
@@ -62,7 +48,7 @@
 
       h1 {
         font-size: 40px;
-      }
+      } */
 
       .blue {
         color: var(--default-primary-color);
@@ -143,31 +129,25 @@
 
       @keyframes bounceIn {
         0% {
-          /*transform: scale(0.1);*/
           opacity: 0;
         }
         100% {
-          /*transform: scale(1);*/
           opacity: 1;
         }
       }
       @keyframes -webkit-bounceIn {
         0% {
-          /*transform: scale(0.1);*/
           opacity: 0;
         }
         100% {
-          /*transform: scale(1);*/
           opacity: 1;
         }
       }
       @keyframes -webkit-bounceIn {
         0% {
-          /*transform: scale(0.1);*/
           opacity: 0;
         }
         100% {
-          /*transform: scale(1);*/
           opacity: 1;
         }
       }

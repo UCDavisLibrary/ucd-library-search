@@ -1,153 +1,47 @@
-<link rel="import" href="bower_components/polymer/polymer-element.html">
-<link rel="import" href="bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="bower_components/iron-media-query/iron-media-query.html">
+<style>
+  ucd-library-search {
+    text-align: left;
+    max-width: 1200px;
+    background: rgba(0, 0, 0, .2);
+    box-shadow: 0 1px 3px #333;
+    display: block;
+    padding: 15px;
+    min-width: 275px;
+  }
 
-<link rel="import" href="elements/styles.html">
-<script src="js/primo-utils.js"></script>
-<link rel="import" href="elements/ucd-library-search-base.html">
-<link rel="import" href="elements/ucd-library-search-nav.html">
-<link rel="import" href="elements/ucd-library-search-catalog.html">
-<link rel="import" href="elements/ucd-library-search-databases.html">
-<link rel="import" href="elements/ucd-library-search-guide.html">
-<link rel="import" href="elements/ucd-library-search-courses.html">
-<link rel="import" href="elements/ucd-library-search-melvyl.html">
-<link rel="import" href="elements/ucd-library-search-website.html">
-
-<dom-module id="ucd-library-search">
-  <template>
-    <style>
-      :host {
-        text-align: left;
-        max-width: 1200px;
-        background: rgba(0, 0, 0, .2);
-        box-shadow: 0 1px 3px #333;
-        display: block;
-        padding: 15px;
-        min-width: 275px;
-      }
-
-      :host([flat]) {
-        background: transparent;
-        box-shadow: none;
-      }
-
-      @media(min-width: 900px) {
-        :host {
-          padding: 20px;
-        }
-      }
-
-      [layout] {
-        @apply(--layout-horizontal);
-      }
-      [flex] {
-        @apply(--layout-flex);
-      }
-      [padded] {
-        padding-left: 50px
-      }
-    </style>
-
-    <iron-media-query query="min-width: 800px" query-matches="{{largeScreen}}"></iron-media-query>
-
-
-    <div layout$="[[largeScreen]]">
-      <ucd-library-search-nav id="nav" selected="{{section}}" flat="[[flat]]"></ucd-library-search-nav>
-
-      <div flex$="[[largeScreen]]" padded$="[[largeScreen]]">
-        <iron-pages selected="{{section}}" attr-for-selected="id">
-          <ucd-library-search-catalog id="library" flat="[[flat]]"></ucd-library-search-catalog>
-          <ucd-library-search-databases id="databases" flat="[[flat]]" popular-databases="[[popularDatabases]]" root-url$="[[rootUrl]]"></ucd-library-search-databases>
-          <ucd-library-search-guide id="guide" flat="[[flat]]" root-url$="[[rootUrl]]"></ucd-library-search-guide>
-          <ucd-library-search-courses id="courses" flat="[[flat]]"></ucd-library-search-courses>
-          <ucd-library-search-melvyl id="melvyl" flat="[[flat]]" root-url$="[[rootUrl]]"></ucd-library-search-melvyl>
-          <ucd-library-search-website id="website" flat="[[flat]]" root-url$="[[rootUrl]]"></ucd-library-search-website>
-        </iron-pages>
-      </div>
-    </div>
-    
-  </template>
-  <script>
-    class UCDLibrarySearch extends Polymer.Element {
-      static get is() { 
-        return 'ucd-library-search'; 
-      }
-
-      static get properties() {
-        return {
-          section : {
-            type : String,
-            value : 'library'
-          },
-          flat : {
-            type : Boolean,
-            value : false,
-            reflectToAttribute: true
-          },
-          rootUrl : {
-            type : String,
-            value : ''
-          },
-          popularDatabases : {
-            type : Array,
-            value : () => []
-          }
-        }
-      }
-
-      ready() {
-        super.ready();
-
-        /**
-         * Check UCD library url parameters
-         */
-        var postType = this.getParameterByName('post_type');
-        var search = this.getParameterByName('s');
-        var nav = this.getParameterByName('search_nav');
-
-        if( postType === 'article' ) {
-          this.section = 'guide';
-          this._setValues(search);
-        } else if( postType === 'database' ) {
-          this.section = 'databases';
-          this._setValues(search);
-        } else if( this.getParameterByName('search-option') === '3' || postType ) {
-          this.section = 'website';
-          this._setValues(search);
-          if( postType ) {
-            this.$.website.setFilter(postType);
-          }
-        } else if( nav ) {
-          this.section = nav;
-        }
-
-        this.$.nav.init();
-      }
-
-      _setValues(text) {
-        this.dispatchEvent(
-          new CustomEvent('ui-search-text-change', {
-            bubbles: true, 
-            composed: true,
-            detail : {
-              value: text
-            }
-          })
-        );
-      }
-
-      getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
-      }
+  @media(min-width: 900px) {
+    ucd-library-search {
+      padding: 20px;
     }
+  }
 
-    window.customElements.define(UCDLibrarySearch.is, UCDLibrarySearch);
-  </script>
-</dom-module>
+  ucd-library-search [layout] {
+    display: flex;
+  }
+  
+  ucd-library-search [flex] {
+    flex: 1;
+  }
+
+  ucd-library-search [padded] {
+    padding-left: 50px
+  }
+</style>
+
+<iron-media-query query="min-width: 800px" query-matches="{{largeScreen}}"></iron-media-query>
+
+<div layout$="[[largeScreen]]">
+  <ucd-library-search-nav id="nav" selected="{{section}}" ></ucd-library-search-nav>
+
+  <div flex$="[[largeScreen]]" padded$="[[largeScreen]]">
+    <iron-pages selected="{{section}}" attr-for-selected="id">
+      <ucd-library-search-catalog id="library"></ucd-library-search-catalog>
+      <ucd-library-search-databases id="databases" popular-databases="[[popularDatabases]]" root-url$="[[rootUrl]]"></ucd-library-search-databases>
+      <ucd-library-search-guide id="guide" root-url$="[[rootUrl]]"></ucd-library-search-guide>
+      <ucd-library-search-courses id="courses"></ucd-library-search-courses>
+      <ucd-library-search-melvyl id="melvyl" root-url$="[[rootUrl]]"></ucd-library-search-melvyl>
+      <ucd-library-search-website id="website" root-url$="[[rootUrl]]"></ucd-library-search-website>
+    </iron-pages>
+  </div>
+</div>
+    
