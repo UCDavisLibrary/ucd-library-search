@@ -16,6 +16,14 @@
   ucd-library-search [padded] {
     padding-left: 50px
   }
+
+  ucd-library-search iron-pages > * {
+    display: block;
+
+    -webkit-animation:bounceIn 400ms ease-out;
+    -ms-animation:bounceIn 400ms ease-out;
+    animation:bounceIn 400ms ease-out;
+  }
 </style>
 
 <iron-media-query query="min-width: 800px" query-matches="{{largeScreen}}"></iron-media-query>

@@ -7,11 +7,8 @@
   "author": "Justin Merz <jrmerz@ucdavis.edu>",
   "license": "MIT",
   "dependencies": {
-    "@polymer/iron-flex-layout": "^3.0.0-pre.12",
-    "@polymer/iron-icon": "^3.0.0-pre.12",
     "@polymer/iron-media-query": "^3.0.0-pre.12",
     "@polymer/iron-pages": "^3.0.0-pre.12",
-    "@polymer/paper-icon-button": "^3.0.0-pre.12",
     "@polymer/polymer": "^3.0.0-pre.12",
     "@ucd-lib/cork-app-utils": "^2.0.5"
   },

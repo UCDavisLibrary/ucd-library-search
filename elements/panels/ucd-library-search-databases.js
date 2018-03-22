@@ -49,12 +49,15 @@ class UCDLibrarySearchDatabases extends Mixin(PolymerElement)
       }
     }
   }
+
+  static get template() {
+    return template;
+  }
   
   constructor() {
     super();
     this._onPopularDatabaseUpdate();
   }
-
 
   _onPopularDatabaseUpdate() {
     var dbs;
@@ -78,4 +81,4 @@ class UCDLibrarySearchDatabases extends Mixin(PolymerElement)
   }
 }
 
-customElements.define('ucd-library-search-database', UCDLibrarySearchDatabases);
+customElements.define('ucd-library-search-databases', UCDLibrarySearchDatabases);

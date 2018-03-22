@@ -12,13 +12,9 @@ class UCDLibrarySearchCatalog extends Mixin(PolymerElement)
     return {
       browseLink : {
         type : String,
-        value : function() {
-          var params = {
+        value : () => PrimoUtils.createPrimoLink({
             mode : PrimoUtils.MODES.BROWSE
-          }
-
-          return PrimoUtils.createPrimoLink(params);
-        }
+        })
       }
     }
   }

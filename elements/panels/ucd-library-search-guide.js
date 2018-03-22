@@ -16,6 +16,10 @@ class UCDLibrarySearchGuide extends Mixin(PolymerElement)
     }
   }
 
+  static get template() {
+    return template;
+  }
+
   _onBrowse(e) {
     this.sendGAEvent({eventAction: 'guide-browse', eventLabel: e.currentTarget.getAttribute('type')});
   }

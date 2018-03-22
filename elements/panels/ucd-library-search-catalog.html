@@ -1,30 +1,13 @@
 <style>
-  ucd-library-search-catalog {
-    display: block;
-
-    -webkit-animation:bounceIn 400ms ease-out;
-    -ms-animation:bounceIn 400ms ease-out;
-    animation:bounceIn 400ms ease-out;
-  }
-
-  a[extra] {
-    font-weight: normal;
-    color: white;
-    text-shadow: none;
-    white-space: nowrap;
-    text-decoration: underline !important;
-    color: var(--default-primary-color);
-  }
-
-  a[extra]:hover {
-    color: var(--default-secondary-color);
-    text-decoration: underline;
-  }
-
   /*hack for website layout */
-  /* input[type="checkbox"] {
+  ucd-library-search-catalog input[type="checkbox"] {
     width: auto
-  } */
+  }
+
+  ucd-library-search-catalog label {
+    display: inline-block !important;
+    margin-top: 5px !important;
+  }
 
   @media(max-width: 1200px) {
     .weight-one {
@@ -64,11 +47,9 @@
   </div>
 
   <div layout$="[[largeScreen]]">
-    <div class="layout center" style="padding-top: 5px; flex: 1">
-      <div>
-        <input type="checkbox" style="vertical-align: sub" id="noextra" on-change="setBtnHrefs"/>
-      </div>
-      <label for="noextra" class="flex blue text" style="white-space: nowrap; margin: 5px">
+    <div style="padding-top: 5px; flex: 1; white-space: nowrap;">
+      <input type="checkbox" id="noextra" />
+      <label for="noextra" class="blue">
         Library Catalog only
       </label>
     </div>

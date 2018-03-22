@@ -16,9 +16,6 @@ import "./panels/ucd-library-search-website"
 import template from "./ucd-library-search.html"
 import LightDom from "./utils/light-dom"
 
-console.log('here');
-console.log(LightDom);
-
 class UCDLibrarySearch extends Mixin(PolymerElement)
   .with(LightDom) {
 
