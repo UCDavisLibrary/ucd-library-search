@@ -1,7 +1,7 @@
-import {Element as PolymerElement} from "@polymer/polymer"
+import {PolymerElement} from "@polymer/polymer/polymer-element"
 import UCDLibrarySearchBase from "../utils/ucd-library-search-base"
 import LightDom from "../utils/light-dom"
-import PrimoUtils from "./utils/primo"
+import PrimoUtils from "../utils/primo"
 
 import template from "./ucd-library-search-courses.html"
 

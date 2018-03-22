@@ -1,4 +1,4 @@
-import {Element as PolymerElement} from "@polymer/polymer"
+import {PolymerElement} from "@polymer/polymer/polymer-element"
 import LightDom from "./utils/light-dom"
 
 import template from "./ucd-library-search-nav.html"

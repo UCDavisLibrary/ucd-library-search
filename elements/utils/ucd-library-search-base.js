@@ -1,5 +1,8 @@
 
-export default class UCDLibrarySearchBase {
+
+const UCDLibrarySearchBase = subclass =>
+  class UCDLibrarySearchBaseMixin extends subclass {
+
   ready() {
     super.ready();
     window.addEventListener('ui-search-text-change', this._setSearchText.bind(this));
@@ -64,3 +67,5 @@ export default class UCDLibrarySearchBase {
     this.$.input.value = val;
   }
 }
+
+export default UCDLibrarySearchBase;

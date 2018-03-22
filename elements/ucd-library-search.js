@@ -1,12 +1,23 @@
-import {Element as PolymerElement} from "@polymer/polymer"
+import {PolymerElement} from "@polymer/polymer/polymer-element"
 import "@polymer/iron-pages/iron-pages"
 import "@polymer/iron-media-query/iron-media-query"
 import "@ucd-lib/cork-app-utils/lib/Mixin"
-import "./elements/style-properties"
-import "./elements/shared-styles"
+
+import "./styles/style-properties"
+import "./styles/shared-styles"
+import "./ucd-library-search-nav"
+import "./panels/ucd-library-search-catalog"
+import "./panels/ucd-library-search-courses"
+import "./panels/ucd-library-search-databases"
+import "./panels/ucd-library-search-guide"
+import "./panels/ucd-library-search-melvyl"
+import "./panels/ucd-library-search-website"
 
 import template from "./ucd-library-search.html"
-import LightDom from "./elements/utils/light-dom"
+import LightDom from "./utils/light-dom"
+
+console.log('here');
+console.log(LightDom);
 
 class UCDLibrarySearch extends Mixin(PolymerElement)
   .with(LightDom) {

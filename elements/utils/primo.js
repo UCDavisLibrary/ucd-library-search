@@ -97,4 +97,4 @@ class PrimoUtils {
   }
 }
 
-module.exports = PrimoUtils;
+module.exports = new PrimoUtils();
