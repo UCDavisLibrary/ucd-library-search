@@ -3,6 +3,9 @@ const LightDom = subclass =>
   class LightDomMixin extends subclass {
 
   _attachDom(dom) {
+    if( window.ShadyDOM && window.ShadyDOM.inUse ) {
+      return super._attachDom(dom);
+    }
     
     // promote element styles to head
     let styles = dom.querySelectorAll('style');
@@ -13,15 +16,24 @@ const LightDom = subclass =>
       document.head.appendChild(styles[i]);
     }
 
-    // set automatic node finding
-    let ids = dom.querySelectorAll('[id]');
-    this.$ = {};
-    for( var i = 0; i < ids.length; i++ ) {
-      this.$[ids[i].getAttribute('id')] = ids[i];
-    }
 
     // append dom template to local dom (instead of a shadowroot)
     this.appendChild(dom);
+    return dom;
+  }
+
+  querySelector(selector) {
+    if( this.shadowRoot ) {
+      return this.shadowRoot.querySelector(selector);
+    }
+    return super.querySelector(selector);
+  }
+
+  querySelectorAll(selector) {
+    if( this.shadowRoot ) {
+      return this.shadowRoot.querySelectorAll(selector);
+    }
+    return super.querySelectorAll(selector);
   }
 
 }

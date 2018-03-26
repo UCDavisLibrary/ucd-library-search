@@ -1,20 +1,21 @@
 import {PolymerElement} from "@polymer/polymer/polymer-element"
-import "@polymer/iron-pages/iron-pages"
-import "@polymer/iron-media-query/iron-media-query"
 import "@ucd-lib/cork-app-utils/lib/Mixin"
 
-import "./styles/style-properties"
-import "./styles/shared-styles"
-import "./ucd-library-search-nav"
-import "./panels/ucd-library-search-catalog"
-import "./panels/ucd-library-search-courses"
-import "./panels/ucd-library-search-databases"
-import "./panels/ucd-library-search-guide"
-import "./panels/ucd-library-search-melvyl"
-import "./panels/ucd-library-search-website"
+import "@polymer/iron-media-query/iron-media-query"
+import "@polymer/iron-pages/iron-pages"
+
+import "./elements/styles/style-properties"
+import "./elements/styles/shared-styles"
+import "./elements/ucd-library-search-nav"
+import "./elements/panels/ucd-library-search-catalog"
+import "./elements/panels/ucd-library-search-courses"
+import "./elements/panels/ucd-library-search-databases"
+import "./elements/panels/ucd-library-search-guide"
+import "./elements/panels/ucd-library-search-melvyl"
+import "./elements/panels/ucd-library-search-website"
 
 import template from "./ucd-library-search.html"
-import LightDom from "./utils/light-dom"
+import LightDom from "./elements/utils/light-dom"
 
 class UCDLibrarySearch extends Mixin(PolymerElement)
   .with(LightDom) {
@@ -65,8 +66,6 @@ class UCDLibrarySearch extends Mixin(PolymerElement)
     } else if( nav ) {
       this.section = nav;
     }
-
-    this.$.nav.init();
   }
   
   _setValues(text) {

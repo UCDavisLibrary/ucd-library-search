@@ -7,10 +7,6 @@ const UCDLibrarySearchBase = subclass =>
     super.ready();
     window.addEventListener('ui-search-text-change', this._setSearchText.bind(this));
   }
-
-  _attachDom(dom) {
-    this.appendChild(dom);
-  }
   
   _onKeyUp(e) {
     if( e.which === 13 ) this._search();

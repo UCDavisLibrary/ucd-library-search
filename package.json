@@ -1,19 +1,18 @@
 {
-  "name": "ucd-library-search",
+  "name": "@ucd-lib/ucd-library-search",
   "version": "1.0.0",
   "main": "index.js",
+  "flat": true,
   "repository": "git@github.com:UCDavisLibrary/ucd-library-search.git",
   "author": "Justin Merz <jrmerz@ucdavis.edu>",
   "license": "MIT",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack --config webpack-watch.config.js --watch",
-    "dist": "webpack --config webpack-dist.config.js"
+  "dependencies": {
+    "@polymer/iron-media-query": "^3.0.0-pre.12",
+    "@polymer/iron-pages": "^3.0.0-pre.12",
+    "@polymer/polymer": "^3.0.0-pre.12",
+    "@ucd-lib/cork-app-utils": "^2.0.5"
   },
-  "dependencies": {},
-  "devDependencies": {
-    "@ucd-lib/cork-app-build": "0.0.2",
-    "webpack": "^4.2.0",
-    "webpack-cli": "^2.0.13"
+  "resolutions": {
+    "@polymer/iron-icon": "3.0.0-pre.12"
   }
 }

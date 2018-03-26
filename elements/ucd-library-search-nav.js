@@ -24,16 +24,20 @@ class UCDLibrarySearchNav extends Mixin(PolymerElement)
     return template;
   }
 
-  init() {
+  ready() {
+    super.ready();
     this._resetBtns();
 
-    this.querySelector('button[value="'+this.selected+'"]').classList.add('selected');
+    let selected = this.querySelector('button[value="'+this.selected+'"]');
+    if( selected ) {
+      selected.classList.add('selected');
+    }
+    
     this.$.selector.value = this.selected;
   }
 
   _select(e) {
     this._resetBtns();
-
     this.selected = e.currentTarget.value || e.currentTarget.getAttribute('value');
     this.querySelector('button[value="'+this.selected+'"]').classList.add('selected');
     this.$.selector.value = this.selected;

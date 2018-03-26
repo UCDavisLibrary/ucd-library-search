@@ -62,6 +62,14 @@
     fs-extra "^4.0.2"
     isomorphic-fetch "^2.2.1"
 
+"@ucd-lib/website-shared-elements@UCDavisLibrary/website-shared-elements":
+  version "0.0.1"
+  resolved "https://codeload.github.com/UCDavisLibrary/website-shared-elements/tar.gz/5e50390824e9a6cdf579d6744ee6ca3b50295c66"
+  dependencies:
+    "@polymer/iron-media-query" "^3.0.0-pre.12"
+    "@polymer/iron-pages" "^3.0.0-pre.12"
+    "@polymer/polymer" "^3.0.0-pre.12"
+
 "@webcomponents/shadycss@^1.0.0":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.1.2.tgz#947e9306eb2e084a4a3a4fd738aced00721bce92"

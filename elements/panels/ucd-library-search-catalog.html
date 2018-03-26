@@ -1,28 +1,28 @@
 <style>
   /*hack for website layout */
-  ucd-library-search-catalog input[type="checkbox"] {
+  .ucd-library-search-catalog input[type="checkbox"] {
     width: auto
   }
 
-  ucd-library-search-catalog label {
+  .ucd-library-search-catalog label {
     display: inline-block !important;
     margin-top: 5px !important;
   }
 
   @media(max-width: 1200px) {
-    .weight-one {
+    .ucd-library-search-catalog .weight-one {
       display: block;
     }
-    .weight-one.break {
+    .ucd-library-search-catalog .weight-one.break {
       display: none;
     }
   }
 
   @media(max-width: 1075px) {
-    .weight-two {
+    .ucd-library-search-catalog .weight-two {
       display: block;
     }
-    .weight-two.break {
+    .ucd-library-search-catalog .weight-two.break {
       display: none;
     }
   }
@@ -32,7 +32,7 @@
 <iron-media-query query="min-width: 950px" query-matches="{{largeScreen}}"></iron-media-query>
 <iron-media-query query="max-width: 500px" query-matches="{{smallScreen}}"></iron-media-query>
 
-<div class="text" flat$="[[flat]]">
+<div class="text ucd-library-search-catalog" flat$="[[flat]]">
   <h1 class="title">Search Library Catalog + Articles</h1>
   <div class="help">
     Find books, ebooks, journals, movies and music, government documents, and more.

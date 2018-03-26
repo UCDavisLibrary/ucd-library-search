@@ -1,5 +1,5 @@
 <style>
-  ucd-library-search {
+  :host, ucd-library-search {
     text-align: left;
     max-width: 1200px;
     display: block;
@@ -7,17 +7,17 @@
     min-width: 275px;
   }
 
-  @media(min-width: 900px) {
-    ucd-library-search {
+  /* @media(min-width: 900px) {
+    :host, .ucd-library-search {
       padding: 20px;
     }
-  }
+  } */
 
-  ucd-library-search [padded] {
+  .ucd-library-search [padded] {
     padding-left: 50px
   }
 
-  ucd-library-search iron-pages > * {
+  .ucd-library-search iron-pages > * {
     display: block;
 
     -webkit-animation:bounceIn 400ms ease-out;
@@ -28,7 +28,7 @@
 
 <iron-media-query query="min-width: 800px" query-matches="{{largeScreen}}"></iron-media-query>
 
-<div layout$="[[largeScreen]]">
+<div class="ucd-library-search" layout$="[[largeScreen]]">
   <ucd-library-search-nav id="nav" selected="{{section}}" ></ucd-library-search-nav>
 
   <div flex$="[[largeScreen]]" padded$="[[largeScreen]]">
